@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Login - Smart Clinic Management System</title>
+    <link rel="stylesheet" href="../admin/styles.css">
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="logo">
+                    <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+                        <circle cx="30" cy="30" r="28" fill="#10B981" />
+                        <path d="M30 15 L30 45 M15 30 L45 30" stroke="white" stroke-width="4" stroke-linecap="round" />
+                    </svg>
+                </div>
+                <h1>Doctor Portal</h1>
+                <p>Smart Clinic Management System</p>
+            </div>
+
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required placeholder="doctor@smartclinic.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required placeholder="Enter your password">
+                </div>
+
+                <div id="errorMessage" class="error-message"></div>
+
+                <button type="submit" class="btn-primary">
+                    <span id="loginText">Sign In</span>
+                    <span id="loadingSpinner" class="spinner" style="display: none;"></span>
+                </button>
+            </form>
+
+            <div class="login-footer">
+                <p>Demo: john.smith@smartclinic.com / doctor123</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:8080/api';
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+            const loginText = document.getElementById('loginText');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+
+            loginText.style.display = 'none';
+            loadingSpinner.style.display = 'inline-block';
+            errorMessage.classList.remove('show');
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/doctors/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    localStorage.setItem('doctorToken', data.token);
+                    localStorage.setItem('doctorData', JSON.stringify(data.doctor));
+                    window.location.href = 'appointments.html';
+                } else {
+                    errorMessage.textContent = data.message || 'Login failed';
+                    errorMessage.classList.add('show');
+                }
+            } catch (error) {
+                errorMessage.textContent = 'Unable to connect to server';
+                errorMessage.classList.add('show');
+            } finally {
+                loginText.style.display = 'inline';
+                loadingSpinner.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>

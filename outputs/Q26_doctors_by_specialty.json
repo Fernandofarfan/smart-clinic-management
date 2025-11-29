@@ -1,0 +1,1 @@
+[{"id":1,"name":"Dr. John Smith","email":"john.smith@smartclinic.com","password":"doctor123","specialty":"Cardiology","phone":"+1-555-0101","availableTimes":"[\"09:00-10:00\",\"10:00-11:00\",\"14:00-15:00\",\"15:00-16:00\"]","bio":"Experienced cardiologist with 15 years of practice","yearsOfExperience":15,"consultationFee":150.0,"isActive":true}]

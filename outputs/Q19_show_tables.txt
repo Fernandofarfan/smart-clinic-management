@@ -1,0 +1,6 @@
+Tables_in_smart_clinic_db
+admins
+appointments
+doctors
+patients
+prescriptions

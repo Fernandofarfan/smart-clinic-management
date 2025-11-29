@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Smart Clinic Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="dashboard">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-small">
+                    <svg width="40" height="40" viewBox="0 0 60 60" fill="none">
+                        <circle cx="30" cy="30" r="28" fill="#4F46E5" />
+                        <path d="M30 15 L30 45 M15 30 L45 30" stroke="white" stroke-width="4" stroke-linecap="round" />
+                    </svg>
+                </div>
+                <h2>Admin Panel</h2>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item active">
+                    <a href="#doctors">
+                        <span class="icon">👨‍⚕️</span>
+                        <span>Manage Doctors</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#patients">
+                        <span class="icon">👥</span>
+                        <span>Patients</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#appointments">
+                        <span class="icon">📅</span>
+                        <span>Appointments</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#reports">
+                        <span class="icon">📊</span>
+                        <span>Reports</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <button onclick="logout()" class="btn-logout">Logout</button>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <header class="content-header">
+                <h1>Manage Doctors</h1>
+                <div class="user-info">
+                    <span id="adminName">Admin User</span>
+                </div>
+            </header>
+
+            <div class="content-body">
+                <!-- Add Doctor Form -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Add New Doctor</h2>
+                    </div>
+                    <div class="card-body">
+                        <form id="addDoctorForm" class="doctor-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="doctorName">Full Name *</label>
+                                    <input type="text" id="doctorName" required placeholder="Dr. John Smith">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="doctorEmail">Email *</label>
+                                    <input type="email" id="doctorEmail" required placeholder="doctor@smartclinic.com">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="doctorSpecialty">Specialty *</label>
+                                    <select id="doctorSpecialty" required>
+                                        <option value="">Select Specialty</option>
+                                        <option value="Cardiology">Cardiology</option>
+                                        <option value="Pediatrics">Pediatrics</option>
+                                        <option value="Orthopedics">Orthopedics</option>
+                                        <option value="Dermatology">Dermatology</option>
+                                        <option value="Neurology">Neurology</option>
+                                        <option value="General Practice">General Practice</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="doctorPhone">Phone *</label>
+                                    <input type="tel" id="doctorPhone" required placeholder="+1-555-0100">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="doctorPassword">Password *</label>
+                                    <input type="password" id="doctorPassword" required placeholder="Enter password">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="consultationFee">Consultation Fee ($)</label>
+                                    <input type="number" id="consultationFee" placeholder="150.00" step="0.01">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="availableTimes">Available Times (JSON format)</label>
+                                <input type="text" id="availableTimes"
+                                    placeholder='["09:00-10:00","10:00-11:00","14:00-15:00"]'>
+                                <small>Format: ["HH:MM-HH:MM","HH:MM-HH:MM"]</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="doctorBio">Biography</label>
+                                <textarea id="doctorBio" rows="3" placeholder="Brief professional biography"></textarea>
+                            </div>
+
+                            <div id="formMessage" class="form-message"></div>
+
+                            <button type="submit" class="btn-primary">
+                                <span>➕ Add Doctor</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Doctors List -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Current Doctors</h2>
+                        <button onclick="loadDoctors()" class="btn-secondary">🔄 Refresh</button>
+                    </div>
+                    <div class="card-body">
+                        <div id="doctorsList" class="doctors-grid">
+                            <!-- Doctors will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
