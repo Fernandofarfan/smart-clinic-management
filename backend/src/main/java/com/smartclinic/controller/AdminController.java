@@ -39,22 +39,22 @@ public class AdminController {
             return ResponseEntity.ok(response);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-     Operation(summary = "Create admin", description = "Creates a new admin account")
-    @ApiResponse(responseCode = "201", description = "Admin created successfully")
-    @   }
+        }
     }
 
+    @Operation(summary = "Create admin", description = "Creates a new admin account")
+    @ApiResponse(responseCode = "201", description = "Admin created successfully")
     @PostMapping
     public ResponseEntity<Admin> createAdmin(@Valid @RequestBody Admin admin) {
         Admin savedAdmin = adminService.createAdmin(admin);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedAdmin);
-    }Operation(summary = "Get admin by ID", description = "Retrieves detailed information of a specific admin")
+    }
+
+    @Operation(summary = "Get admin by ID", description = "Retrieves detailed information of a specific admin")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Admin found"),
         @ApiResponse(responseCode = "404", description = "Admin not found")
     })
-    @
-
     @GetMapping("/{id}")
     public ResponseEntity<Admin> getAdminById(@PathVariable Long id) {
         return adminService.getAdminById(id)

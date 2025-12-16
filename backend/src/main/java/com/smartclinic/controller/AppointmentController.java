@@ -39,7 +39,8 @@ public class AppointmentController {
 
     @Autowired
     private TokenService tokenService;
-Operation(summary = "Book appointment", description = "Books a new appointment")
+
+    @Operation(summary = "Book appointment", description = "Books a new appointment")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Appointment booked successfully"),
         @ApiResponse(responseCode = "401", description = "Unauthorized"),
@@ -48,8 +49,7 @@ Operation(summary = "Book appointment", description = "Books a new appointment")
     @PostMapping
     public ResponseEntity<Map<String, Object>> bookAppointment(
             @Valid @RequestBody AppointmentDTO appointmentDTO,
-            @Parameter(hidden = true) @Valid @RequestBody AppointmentDTO appointmentDTO,
-            @RequestHeader(value = "Authorization", required = false) String authorization) {
+            @Parameter(hidden = true) @RequestHeader(value = "Authorization", required = false) String authorization) {
         
         Map<String, Object> response = new HashMap<>();
         
@@ -77,13 +77,13 @@ Operation(summary = "Book appointment", description = "Books a new appointment")
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
             
         } catch (Exception e) {
-     Operation(summary = "Get doctor appointments", description = "Retrieves appointments for a specific doctor")
-    @       response.put("success", false);
+            response.put("success", false);
             response.put("message", "Error booking appointment: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
 
+    @Operation(summary = "Get doctor appointments", description = "Retrieves appointments for a specific doctor")
     @GetMapping("/doctor/{doctorId}")
     public ResponseEntity<List<Appointment>> getAppointmentsByDoctor(
             @PathVariable Long doctorId,
@@ -95,14 +95,14 @@ Operation(summary = "Book appointment", description = "Books a new appointment")
         if (date != null) {
             appointments = appointmentService.getAppointmentsByDoctorAndDate(doctorId, date);
         } else {
-     Operation(summary = "Get patient appointments", description = "Retrieves appointments for a specific patient")
-    @       appointments = appointmentService.getAppointmentsByDoctor(doctorId);
+            appointments = appointmentService.getAppointmentsByDoctor(doctorId);
         }
         System.out.println("DEBUG: Found " + appointments.size() + " appointments");
         
         return ResponseEntity.ok(appointments);
     }
 
+    @Operation(summary = "Get patient appointments", description = "Retrieves appointments for a specific patient")
     @GetMapping("/patient/{patientId}")
     public ResponseEntity<List<Appointment>> getAppointmentsByPatient(
             @PathVariable Long patientId,

@@ -28,10 +28,10 @@ public class PatientController {
 
     @Autowired
     private PatientService patientService;
-Operation(summary = "Patient login", description = "Authenticates a patient")
+
+    @Operation(summary = "Patient login", description = "Authenticates a patient")
     @ApiResponse(responseCode = "200", description = "Login successful")
     @ApiResponse(responseCode = "401", description = "Invalid credentials")
-    @
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(@Valid @RequestBody LoginDTO loginDTO) {
         Map<String, Object> response = patientService.validateLogin(loginDTO.getEmail(), loginDTO.getPassword());
@@ -40,41 +40,41 @@ Operation(summary = "Patient login", description = "Authenticates a patient")
             return ResponseEntity.ok(response);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-     Operation(summary = "Register patient", description = "Creates a new patient account")
-    @ApiResponse(responseCode = "201", description = "Patient registered successfully")
-    @   }
+        }
     }
 
+    @Operation(summary = "Register patient", description = "Creates a new patient account")
+    @ApiResponse(responseCode = "201", description = "Patient registered successfully")
     @PostMapping("/register")
     public ResponseEntity<Patient> register(@Valid @RequestBody Patient patient) {
         Patient savedPatient = patientService.registerPatient(patient);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedPatient);
-    }Operation(summary = "Get all patients", description = "Retrieves a list of all patients")
-    @
+    }
 
+    @Operation(summary = "Get all patients", description = "Retrieves a list of all patients")
     @GetMapping
     public ResponseEntity<List<Patient>> getAllPatients() {
         List<Patient> patients = patientService.getAllPatients();
-     Operation(summary = "Get patient by ID", description = "Retrieves detailed information of a specific patient")
+        return ResponseEntity.ok(patients);
+    }
+
+    @Operation(summary = "Get patient by ID", description = "Retrieves detailed information of a specific patient")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Patient found"),
         @ApiResponse(responseCode = "404", description = "Patient not found")
     })
-    @   return ResponseEntity.ok(patients);
-    }
-
     @GetMapping("/{id}")
-    pOperation(summary = "Update patient", description = "Updates patient information")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Patient updated successfully"),
-        @ApiResponse(responseCode = "404", description = "Patient not found")
-    })
-    @ublic ResponseEntity<Patient> getPatientById(@PathVariable Long id) {
+    public ResponseEntity<Patient> getPatientById(@PathVariable Long id) {
         return patientService.getPatientById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Update patient", description = "Updates patient information")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Patient updated successfully"),
+        @ApiResponse(responseCode = "404", description = "Patient not found")
+    })
     @PutMapping("/{id}")
     public ResponseEntity<Patient> updatePatient(@PathVariable Long id, @RequestBody Patient patientDetails) {
         try {
