@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@stomp/stompjs": "^7.2.1",
+    "@tanstack/react-query": "^5.90.12",
     "axios": "^1.13.2",
     "bcryptjs": "^3.0.3",
     "i18next": "^25.7.3",

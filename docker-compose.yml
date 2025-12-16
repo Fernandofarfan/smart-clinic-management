@@ -10,13 +10,18 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/smart_clinic_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
       - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=2306
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD:-2306}
       - APP_FILE_STORAGE_DIR=/app/uploads
+      - SPRING_DATA_REDIS_HOST=redis
+      - SPRING_DATA_REDIS_PORT=6379
+      - JWT_SECRET=${JWT_SECRET:-SmartClinicSecretKeyForJWTTokenGenerationAndValidation2024}
     volumes:
       - ./uploads:/app/uploads
     depends_on:
       db:
         condition: service_healthy
+      redis:
+        condition: service_started
     networks:
       - smart-clinic-network
 
@@ -38,7 +43,7 @@ services:
     ports:
       - "3307:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=2306
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD:-2306}
       - MYSQL_DATABASE=smart_clinic_db
     command: --default-authentication-plugin=mysql_native_password
     healthcheck:
@@ -55,11 +60,14 @@ services:
     image: redis:alpine
     ports:
       - "6379:6379"
+    volumes:
+      - redis_data:/data
     networks:
       - smart-clinic-network
 
 volumes:
   db_data:
+  redis_data:
   uploads:
 
 networks:

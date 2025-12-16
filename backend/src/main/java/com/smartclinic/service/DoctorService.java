@@ -1,6 +1,8 @@
 package com.smartclinic.service;
 
+import com.smartclinic.dto.DoctorDTO;
 import com.smartclinic.entity.Doctor;
+import com.smartclinic.mapper.DoctorMapper;
 import com.smartclinic.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -21,6 +23,9 @@ public class DoctorService {
 
     @Autowired
     private DoctorRepository doctorRepository;
+
+    @Autowired
+    private DoctorMapper doctorMapper;
 
     @Autowired
     private TokenService tokenService;
@@ -101,33 +106,34 @@ public class DoctorService {
         response.put("success", true);
         response.put("message", "Login successful");
         response.put("token", token);
-        response.put("doctor", Map.of(
-                "id", doctor.getId(),
-                "name", doctor.getName(),
-                "email", doctor.getEmail(),
-                "specialty", doctor.getSpecialty()
-        ));
+        response.put("doctor", doctorMapper.toDTO(doctor));
         
         return response;
     }
 
-    public List<Doctor> getAllDoctors() {
-        return doctorRepository.findByIsActiveTrue();
+    public List<DoctorDTO> getAllDoctors() {
+        return doctorRepository.findByIsActiveTrue().stream()
+                .map(doctorMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
-    public List<Doctor> getDoctorsBySpecialty(String specialty) {
-        return doctorRepository.findActiveBySpecialty(specialty);
+    public List<DoctorDTO> getDoctorsBySpecialty(String specialty) {
+        return doctorRepository.findActiveBySpecialty(specialty).stream()
+                .map(doctorMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
-    public List<Doctor> searchDoctorsByName(String name) {
-        return doctorRepository.searchByName(name);
+    public List<DoctorDTO> searchDoctorsByName(String name) {
+        return doctorRepository.searchByName(name).stream()
+                .map(doctorMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
-    public Doctor saveDoctor(Doctor doctor) {
-        return doctorRepository.save(doctor);
+    public DoctorDTO saveDoctor(Doctor doctor) {
+        return doctorMapper.toDTO(doctorRepository.save(doctor));
     }
 
-    public Optional<Doctor> getDoctorById(Long id) {
-        return doctorRepository.findById(id);
+    public Optional<DoctorDTO> getDoctorById(Long id) {
+        return doctorRepository.findById(id).map(doctorMapper::toDTO);
     }
 }

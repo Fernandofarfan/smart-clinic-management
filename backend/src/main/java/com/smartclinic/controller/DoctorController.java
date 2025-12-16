@@ -1,5 +1,6 @@
 package com.smartclinic.controller;
 
+import com.smartclinic.dto.DoctorDTO;
 import com.smartclinic.dto.LoginDTO;
 import com.smartclinic.entity.Doctor;
 import com.smartclinic.service.DoctorService;
@@ -86,33 +87,33 @@ public class DoctorController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Doctor>> getAllDoctors() {
-        List<Doctor> doctors = doctorService.getAllDoctors();
+    public ResponseEntity<List<DoctorDTO>> getAllDoctors() {
+        List<DoctorDTO> doctors = doctorService.getAllDoctors();
         return ResponseEntity.ok(doctors);
     }
 
     @GetMapping("/specialty/{specialty}")
-    public ResponseEntity<List<Doctor>> getDoctorsBySpecialty(@PathVariable String specialty) {
-        List<Doctor> doctors = doctorService.getDoctorsBySpecialty(specialty);
+    public ResponseEntity<List<DoctorDTO>> getDoctorsBySpecialty(@PathVariable String specialty) {
+        List<DoctorDTO> doctors = doctorService.getDoctorsBySpecialty(specialty);
         return ResponseEntity.ok(doctors);
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<Doctor>> searchDoctors(@RequestParam String name) {
-        List<Doctor> doctors = doctorService.searchDoctorsByName(name);
+    public ResponseEntity<List<DoctorDTO>> searchDoctors(@RequestParam String name) {
+        List<DoctorDTO> doctors = doctorService.searchDoctorsByName(name);
         return ResponseEntity.ok(doctors);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Doctor> getDoctorById(@PathVariable Long id) {
-        Optional<Doctor> doctor = doctorService.getDoctorById(id);
+    public ResponseEntity<DoctorDTO> getDoctorById(@PathVariable Long id) {
+        Optional<DoctorDTO> doctor = doctorService.getDoctorById(id);
         return doctor.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Doctor> createDoctor(@Valid @RequestBody Doctor doctor) {
-        Doctor savedDoctor = doctorService.saveDoctor(doctor);
+    public ResponseEntity<DoctorDTO> createDoctor(@Valid @RequestBody Doctor doctor) {
+        DoctorDTO savedDoctor = doctorService.saveDoctor(doctor);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedDoctor);
     }
 }
