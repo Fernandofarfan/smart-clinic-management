@@ -5,6 +5,12 @@ import com.smartclinic.dto.LoginDTO;
 import com.smartclinic.entity.Appointment;
 import com.smartclinic.service.AppointmentService;
 import com.smartclinic.service.TokenService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -25,6 +31,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/appointments")
 @CrossOrigin(origins = "*")
+@Tag(name = "Appointments", description = "Appointment management APIs")
 public class AppointmentController {
 
     @Autowired
@@ -32,10 +39,16 @@ public class AppointmentController {
 
     @Autowired
     private TokenService tokenService;
-
+Operation(summary = "Book appointment", description = "Books a new appointment")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Appointment booked successfully"),
+        @ApiResponse(responseCode = "401", description = "Unauthorized"),
+        @ApiResponse(responseCode = "400", description = "Invalid input")
+    })
     @PostMapping
     public ResponseEntity<Map<String, Object>> bookAppointment(
             @Valid @RequestBody AppointmentDTO appointmentDTO,
+            @Parameter(hidden = true) @Valid @RequestBody AppointmentDTO appointmentDTO,
             @RequestHeader(value = "Authorization", required = false) String authorization) {
         
         Map<String, Object> response = new HashMap<>();
@@ -64,7 +77,8 @@ public class AppointmentController {
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
             
         } catch (Exception e) {
-            response.put("success", false);
+     Operation(summary = "Get doctor appointments", description = "Retrieves appointments for a specific doctor")
+    @       response.put("success", false);
             response.put("message", "Error booking appointment: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
@@ -81,7 +95,8 @@ public class AppointmentController {
         if (date != null) {
             appointments = appointmentService.getAppointmentsByDoctorAndDate(doctorId, date);
         } else {
-            appointments = appointmentService.getAppointmentsByDoctor(doctorId);
+     Operation(summary = "Get patient appointments", description = "Retrieves appointments for a specific patient")
+    @       appointments = appointmentService.getAppointmentsByDoctor(doctorId);
         }
         System.out.println("DEBUG: Found " + appointments.size() + " appointments");
         
