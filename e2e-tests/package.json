@@ -1,0 +1,15 @@
+{
+  "name": "smart-clinic-e2e",
+  "version": "1.0.0",
+  "description": "End-to-end tests for Smart Clinic Management",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "codegen": "playwright codegen"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "@types/node": "^20.10.0"
+  }
+}
