@@ -63,13 +63,13 @@ const DoctorDashboard = () => {
         <div className="space-y-6">
             {/* View Details Modal */}
             {viewModal.show && viewModal.appointment && (
-                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-center justify-center">
-                    <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-md">
+                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 dark:bg-black/70 overflow-y-auto h-full w-full z-50 flex items-center justify-center">
+                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl w-full max-w-md border border-gray-200 dark:border-gray-700">
                         <div className="flex justify-between items-start mb-4">
-                            <h3 className="text-xl font-bold text-gray-900">Detalles de la Cita</h3>
+                            <h3 className="text-xl font-bold text-gray-900 dark:text-white">Detalles de la Cita</h3>
                             <button
                                 onClick={() => setViewModal({ show: false, appointment: null })}
-                                className="text-gray-400 hover:text-gray-500"
+                                className="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
                             >
                                 <span className="sr-only">Close</span>
                                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -80,42 +80,42 @@ const DoctorDashboard = () => {
 
                         <div className="space-y-4">
                             <div>
-                                <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Paciente</h4>
-                                <p className="text-sm font-medium text-gray-900">{viewModal.appointment.patient?.name || 'Desconocido'}</p>
-                                <p className="text-sm text-gray-500">{viewModal.appointment.patient?.email}</p>
+                                <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Paciente</h4>
+                                <p className="text-sm font-medium text-gray-900 dark:text-white">{viewModal.appointment.patient?.name || 'Desconocido'}</p>
+                                <p className="text-sm text-gray-500 dark:text-gray-400">{viewModal.appointment.patient?.email}</p>
                             </div>
 
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Fecha</h4>
-                                    <p className="text-sm text-gray-900">{new Date(viewModal.appointment.appointmentTime).toLocaleDateString()}</p>
+                                    <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Fecha</h4>
+                                    <p className="text-sm text-gray-900 dark:text-white">{new Date(viewModal.appointment.appointmentTime).toLocaleDateString()}</p>
                                 </div>
                                 <div>
-                                    <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Hora</h4>
-                                    <p className="text-sm text-gray-900">{new Date(viewModal.appointment.appointmentTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                                    <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Hora</h4>
+                                    <p className="text-sm text-gray-900 dark:text-white">{new Date(viewModal.appointment.appointmentTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
                                 </div>
                             </div>
 
                             <div>
-                                <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Estado</h4>
-                                <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full mt-1 ${viewModal.appointment.status === 'COMPLETED' ? 'bg-green-100 text-green-800' :
-                                    viewModal.appointment.status === 'CANCELLED' ? 'bg-red-100 text-red-800' :
-                                        'bg-blue-100 text-blue-800'
+                                <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Estado</h4>
+                                <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full mt-1 ${viewModal.appointment.status === 'COMPLETED' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' :
+                                    viewModal.appointment.status === 'CANCELLED' ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300' :
+                                        'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300'
                                     }`}>
                                     {viewModal.appointment.status}
                                 </span>
                             </div>
 
                             <div>
-                                <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Síntomas</h4>
-                                <p className="text-sm text-gray-900 bg-gray-50 p-2 rounded mt-1">
+                                <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Síntomas</h4>
+                                <p className="text-sm text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700 p-2 rounded mt-1">
                                     {viewModal.appointment.symptoms || "Sin síntomas listados."}
                                 </p>
                             </div>
 
                             <div>
-                                <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Notas</h4>
-                                <p className="text-sm text-gray-900 bg-gray-50 p-2 rounded mt-1">
+                                <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Notas</h4>
+                                <p className="text-sm text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700 p-2 rounded mt-1">
                                     {viewModal.appointment.notes || "Sin notas."}
                                 </p>
                             </div>
@@ -133,7 +133,7 @@ const DoctorDashboard = () => {
                 </div>
             )}
 
-            <h2 className="text-2xl font-bold text-gray-800">Panel del Doctor</h2>
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Panel del Doctor</h2>
 
             {/* Stats Row */}
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -145,31 +145,31 @@ const DoctorDashboard = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Upcoming Appointments */}
-                <div className="bg-white shadow rounded-lg p-6">
-                    <h3 className="text-lg font-medium text-gray-900 mb-4">Todas las Citas</h3>
+                <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+                    <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Todas las Citas</h3>
                     <div className="space-y-4">
                         {appointments.length === 0 ? (
-                            <p className="text-gray-500 text-sm">No se encontraron citas.</p>
+                            <p className="text-gray-500 dark:text-gray-400 text-sm">No se encontraron citas.</p>
                         ) : (
                             appointments.map((apt) => (
-                                <div key={apt.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                <div key={apt.id} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
                                     <div>
-                                        <p className="font-medium text-gray-900">{apt.patient?.name}</p>
-                                        <p className="text-sm text-gray-500">
+                                        <p className="font-medium text-gray-900 dark:text-white">{apt.patient?.name}</p>
+                                        <p className="text-sm text-gray-500 dark:text-gray-400">
                                             {new Date(apt.appointmentTime).toLocaleDateString()} - {new Date(apt.appointmentTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                             {apt.reason && ` - ${apt.reason}`}
                                         </p>
                                     </div>
                                     <div className="flex space-x-2">
-                                        <span className={`px-2 py-1 text-xs rounded-full ${apt.status === 'COMPLETED' ? 'bg-green-100 text-green-800' :
-                                            apt.status === 'CANCELLED' ? 'bg-red-100 text-red-800' :
-                                                'bg-blue-100 text-blue-800'
+                                        <span className={`px-2 py-1 text-xs rounded-full ${apt.status === 'COMPLETED' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' :
+                                            apt.status === 'CANCELLED' ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300' :
+                                                'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300'
                                             }`}>
                                             {apt.status}
                                         </span>
                                         <button
                                             onClick={() => handleViewClick(apt)}
-                                            className="text-indigo-600 hover:text-indigo-900 text-sm font-medium"
+                                            className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-300 text-sm font-medium"
                                         >
                                             Ver
                                         </button>
@@ -181,16 +181,16 @@ const DoctorDashboard = () => {
                 </div>
 
                 {/* Recent Reviews */}
-                <div className="bg-white shadow rounded-lg p-6">
-                    <h3 className="text-lg font-medium text-gray-900 mb-4">Reseñas Recientes</h3>
+                <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+                    <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Reseñas Recientes</h3>
                     <div className="space-y-4">
                         {reviews.length === 0 ? (
-                            <p className="text-gray-500 text-sm">Sin reseñas aún.</p>
+                            <p className="text-gray-500 dark:text-gray-400 text-sm">Sin reseñas aún.</p>
                         ) : (
                             reviews.slice(0, 3).map((review) => (
-                                <div key={review.id} className="p-4 bg-green-50 border border-green-100 rounded-lg">
-                                    <p className="text-sm text-green-800 italic">"{review.comment}"</p>
-                                    <p className="text-xs text-green-600 mt-2">- {review.patient?.name || "Anonymous"}</p>
+                                <div key={review.id} className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-900/30 rounded-lg">
+                                    <p className="text-sm text-green-800 dark:text-green-300 italic">"{review.comment}"</p>
+                                    <p className="text-xs text-green-600 dark:text-green-400 mt-2">- {review.patient?.name || "Anonymous"}</p>
                                     <div className="mt-1 flex text-yellow-500 text-xs">
                                         {"★".repeat(review.rating)}
                                         {"☆".repeat(5 - review.rating)}

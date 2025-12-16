@@ -3,6 +3,7 @@ package com.smartclinic.service;
 import com.smartclinic.entity.Doctor;
 import com.smartclinic.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +36,7 @@ public class DoctorService {
      * @param date Date to check availability
      * @return List of available time slots
      */
+    @Cacheable(value = "doctorAvailability", key = "#doctorId + '-' + #date")
     public List<String> getAvailableTimes(Long doctorId, LocalDate date) {
         Optional<Doctor> doctorOpt = doctorRepository.findById(doctorId);
         

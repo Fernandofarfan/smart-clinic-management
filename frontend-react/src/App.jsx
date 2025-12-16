@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Toaster } from 'sonner';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import BookAppointment from './pages/patient/BookAppointment';
@@ -41,13 +43,15 @@ const DashboardLayoutWrapper = ({ children }) => {
 function App() {
   return (
     <AuthProvider>
-      <Router>
+      <ThemeProvider>
+        <Toaster position="top-right" richColors />
+        <Router>
 
 
-        <Routes>
-          <Route path="/login" element={<Login />} />
+          <Routes>
+            <Route path="/login" element={<Login />} />
 
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
 
           <Route
             path="/dashboard"
@@ -173,7 +177,8 @@ function App() {
             </div>
           } />
         </Routes>
-      </Router>
+        </Router>
+      </ThemeProvider>
     </AuthProvider>
   );
 }

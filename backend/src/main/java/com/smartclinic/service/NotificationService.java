@@ -17,6 +17,16 @@ public class NotificationService {
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
+    public Notification createNotification(String userType, Long userId, String title, String message, String type) {
+        Notification notification = new Notification();
+        notification.setUserType(userType);
+        notification.setUserId(userId);
+        notification.setTitle(title);
+        notification.setMessage(message);
+        notification.setType(type);
+        return notificationRepository.save(notification);
+    }
+
     public List<Notification> getUserNotifications(String userType, Long userId) {
         return notificationRepository.findByUserTypeAndUserIdOrderByCreatedAtDesc(userType, userId);
     }

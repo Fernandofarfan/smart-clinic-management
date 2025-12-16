@@ -48,12 +48,19 @@ services:
       retries: 5
     volumes:
       - db_data:/var/lib/mysql
-      # - ./database/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    networks:
+      - smart-clinic-network
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
     networks:
       - smart-clinic-network
 
 volumes:
   db_data:
+  uploads:
 
 networks:
   smart-clinic-network:

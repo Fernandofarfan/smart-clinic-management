@@ -158,20 +158,20 @@ const PatientDashboard = () => {
         <div className="space-y-6">
             {/* Upload Modal */}
             {uploadModal.show && (
-                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-center justify-center">
-                    <div className="bg-white p-5 rounded-lg shadow-xl w-96">
-                        <h3 className="text-lg font-bold mb-4">Subir Documento</h3>
+                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 dark:bg-black/70 overflow-y-auto h-full w-full z-50 flex items-center justify-center">
+                    <div className="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-xl w-96 border border-gray-200 dark:border-gray-700">
+                        <h3 className="text-lg font-bold mb-4 text-gray-900 dark:text-white">Subir Documento</h3>
                         <div className="mb-4">
-                            <input type="file" onChange={handleFileChange} className="mb-2 w-full" />
-                            <p className="text-xs text-gray-500">Formatos soportados: PDF, JPG, PNG</p>
+                            <input type="file" onChange={handleFileChange} className="mb-2 w-full text-gray-700 dark:text-gray-300" />
+                            <p className="text-xs text-gray-500 dark:text-gray-400">Formatos soportados: PDF, JPG, PNG</p>
                         </div>
 
-                        <div className="max-h-40 overflow-y-auto mb-4 border-t pt-2">
-                            <h4 className="text-sm font-semibold mb-2">Mis Documentos</h4>
+                        <div className="max-h-40 overflow-y-auto mb-4 border-t border-gray-200 dark:border-gray-700 pt-2">
+                            <h4 className="text-sm font-semibold mb-2 text-gray-900 dark:text-white">Mis Documentos</h4>
                             {documents.length === 0 ? <p className="text-xs text-gray-400">Sin documentos aún.</p> : (
                                 <ul className="text-sm space-y-1">
                                     {documents.map(doc => (
-                                        <li key={doc.id} className="flex justify-between">
+                                        <li key={doc.id} className="flex justify-between text-gray-700 dark:text-gray-300">
                                             <span className="truncate w-32">{doc.originalName}</span>
                                             <span className="text-xs text-gray-400">{new Date(doc.uploadedAt).toLocaleDateString()}</span>
                                         </li>
@@ -181,7 +181,7 @@ const PatientDashboard = () => {
                         </div>
 
                         <div className="flex justify-end gap-2">
-                            <button onClick={() => setUploadModal({ show: false, file: null })} className="bg-gray-300 px-4 py-2 rounded">Cancelar</button>
+                            <button onClick={() => setUploadModal({ show: false, file: null })} className="bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-4 py-2 rounded hover:bg-gray-400 dark:hover:bg-gray-600">Cancelar</button>
                             <button onClick={confirmUpload} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Subir</button>
                         </div>
                     </div>
@@ -190,13 +190,13 @@ const PatientDashboard = () => {
 
             {/* Cancel Modal */}
             {cancelModal.show && (
-                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-center justify-center">
-                    <div className="bg-white p-5 rounded-lg shadow-xl w-96">
-                        <h3 className="text-lg font-bold mb-4 text-red-600">Cancelar Cita</h3>
+                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 dark:bg-black/70 overflow-y-auto h-full w-full z-50 flex items-center justify-center">
+                    <div className="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-xl w-96 border border-gray-200 dark:border-gray-700">
+                        <h3 className="text-lg font-bold mb-4 text-red-600 dark:text-red-400">Cancelar Cita</h3>
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2">Razón (Opcional)</label>
+                            <label className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Razón (Opcional)</label>
                             <textarea
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow appearance-none border border-gray-300 dark:border-gray-600 rounded w-full py-2 px-3 text-gray-700 dark:text-white bg-white dark:bg-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 rows="3"
                                 value={cancelReason}
                                 onChange={(e) => setCancelReason(e.target.value)}
@@ -206,7 +206,7 @@ const PatientDashboard = () => {
                         <div className="flex justify-end gap-2">
                             <button
                                 onClick={() => setCancelModal({ show: false, appointmentId: null })}
-                                className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
+                                className="bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-bold py-2 px-4 rounded"
                             >
                                 Volver
                             </button>
@@ -223,14 +223,14 @@ const PatientDashboard = () => {
 
             {/* Reschedule Modal */}
             {rescheduleModal.show && (
-                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-center justify-center">
-                    <div className="bg-white p-5 rounded-lg shadow-xl w-96">
-                        <h3 className="text-lg font-bold mb-4">Reprogramar Cita</h3>
+                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 dark:bg-black/70 overflow-y-auto h-full w-full z-50 flex items-center justify-center">
+                    <div className="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-xl w-96 border border-gray-200 dark:border-gray-700">
+                        <h3 className="text-lg font-bold mb-4 text-gray-900 dark:text-white">Reprogramar Cita</h3>
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2">Nueva Fecha y Hora</label>
+                            <label className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Nueva Fecha y Hora</label>
                             <input
                                 type="datetime-local"
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow appearance-none border border-gray-300 dark:border-gray-600 rounded w-full py-2 px-3 text-gray-700 dark:text-white bg-white dark:bg-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 value={newDate}
                                 onChange={(e) => setNewDate(e.target.value)}
                             />
@@ -238,7 +238,7 @@ const PatientDashboard = () => {
                         <div className="flex justify-end gap-2">
                             <button
                                 onClick={() => setRescheduleModal({ show: false, appointmentId: null })}
-                                className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
+                                className="bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-bold py-2 px-4 rounded"
                             >
                                 Cancelar
                             </button>
@@ -254,13 +254,13 @@ const PatientDashboard = () => {
             )}
 
             {apiError && (
-                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                <div className="bg-red-100 dark:bg-red-900/20 border border-red-400 dark:border-red-800 text-red-700 dark:text-red-300 px-4 py-3 rounded relative" role="alert">
                     <strong className="font-bold">Error:</strong>
                     <span className="block sm:inline"> {apiError}</span>
                 </div>
             )}
 
-            <h2 className="text-2xl font-bold text-gray-800">Mi Panel de Salud</h2>
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Mi Panel de Salud</h2>
 
             {/* Stats Row */}
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -272,38 +272,38 @@ const PatientDashboard = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* My Appointments Table */}
-                <div className="lg:col-span-2 bg-white shadow rounded-lg p-6">
-                    <h3 className="text-lg font-medium text-gray-900 mb-4">Mis Citas</h3>
+                <div className="lg:col-span-2 bg-white dark:bg-gray-800 shadow rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+                    <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Mis Citas</h3>
                     <div className="overflow-x-auto">
-                        <table className="min-w-full divide-y divide-gray-200">
+                        <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                             <thead>
                                 <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Doctor</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
-                                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acción</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Doctor</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Fecha</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Estado</th>
+                                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Acción</th>
                                 </tr>
                             </thead>
-                            <tbody className="bg-white divide-y divide-gray-200">
+                            <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                                 {appointments.length === 0 ? (
                                     <tr>
-                                        <td colSpan="4" className="px-6 py-4 text-center text-sm text-gray-500">
+                                        <td colSpan="4" className="px-6 py-4 text-center text-sm text-gray-500 dark:text-gray-400">
                                             No se encontraron citas.
                                         </td>
                                     </tr>
                                 ) : (
                                     appointments.map((apt) => (
                                         <tr key={apt.id}>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
                                                 Dr. {apt.doctor?.name}
                                             </td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                                                 {new Date(apt.appointmentTime).toLocaleString()}
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap">
-                                                <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${apt.status === 'CONFIRMED' || apt.status === 'COMPLETED' ? 'bg-green-100 text-green-800' :
-                                                    apt.status === 'CANCELLED' ? 'bg-red-100 text-red-800' :
-                                                        'bg-blue-100 text-blue-800'
+                                                <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${apt.status === 'CONFIRMED' || apt.status === 'COMPLETED' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' :
+                                                    apt.status === 'CANCELLED' ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300' :
+                                                        'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300'
                                                     }`}>
                                                     {apt.status || 'SCHEDULED'}
                                                 </span>
@@ -311,13 +311,13 @@ const PatientDashboard = () => {
                                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                 <button
                                                     onClick={() => handleRescheduleClick(apt)}
-                                                    className="text-indigo-600 hover:text-indigo-900 mr-4"
+                                                    className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-300 mr-4"
                                                 >
                                                     Reprogramar
                                                 </button>
                                                 <button
                                                     onClick={() => handleCancelClick(apt)}
-                                                    className="text-red-600 hover:text-red-900"
+                                                    className="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300"
                                                 >
                                                     Cancelar
                                                 </button>
@@ -339,7 +339,7 @@ const PatientDashboard = () => {
                                                                 })
                                                                 .catch(e => alert("Error downloading PDF"));
                                                         }}
-                                                        className="text-green-600 hover:text-green-900 ml-4"
+                                                        className="text-green-600 dark:text-green-400 hover:text-green-900 dark:hover:text-green-300 ml-4"
                                                     >
                                                         ⬇ PDF
                                                     </button>
@@ -354,8 +354,8 @@ const PatientDashboard = () => {
                 </div>
 
                 {/* Quick Actions */}
-                <div className="bg-white shadow rounded-lg p-6">
-                    <h3 className="text-lg font-medium text-gray-900 mb-4">Acciones Rápidas</h3>
+                <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+                    <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Acciones Rápidas</h3>
                     <div className="space-y-4">
                         <button
                             onClick={() => navigate('/book-appointment')}
@@ -365,7 +365,7 @@ const PatientDashboard = () => {
                         </button>
                         <button
                             onClick={handleUploadClick}
-                            className="w-full bg-white border border-gray-300 rounded-md py-2 px-4 flex items-center justify-center text-sm font-medium text-gray-700 hover:bg-gray-50"
+                            className="w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md py-2 px-4 flex items-center justify-center text-sm font-medium text-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-600"
                         >
                             Subir Documento
                         </button>
@@ -378,7 +378,7 @@ const PatientDashboard = () => {
                                     alert(`Mostrando ${history.length} citas pasadas.`);
                                 }
                             }}
-                            className="w-full bg-white border border-gray-300 rounded-md py-2 px-4 flex items-center justify-center text-sm font-medium text-gray-700 hover:bg-gray-50"
+                            className="w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md py-2 px-4 flex items-center justify-center text-sm font-medium text-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-600"
                         >
                             Ver Historial
                         </button>
@@ -395,13 +395,13 @@ const PatientDashboard = () => {
                                     setLoading(false);
                                 }
                             }}
-                            className="w-full bg-white border border-gray-300 rounded-md py-2 px-4 flex items-center justify-center text-sm font-medium text-gray-700 hover:bg-gray-50 mt-2"
+                            className="w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md py-2 px-4 flex items-center justify-center text-sm font-medium text-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-600 mt-2"
                         >
                             Ver Todas las Citas
                         </button>
                         <button
                             onClick={() => navigate('/profile')}
-                            className="w-full bg-white border border-gray-300 rounded-md py-2 px-4 flex items-center justify-center text-sm font-medium text-gray-700 hover:bg-gray-50 mt-2"
+                            className="w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md py-2 px-4 flex items-center justify-center text-sm font-medium text-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-600 mt-2"
                         >
                             Mi Perfil / Configuración
                         </button>
