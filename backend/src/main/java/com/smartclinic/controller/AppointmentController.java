@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,6 +75,7 @@ public class AppointmentController {
             @PathVariable Long doctorId,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         
+        System.out.println("DEBUG: Request for Doctor ID: " + doctorId + " Date: " + date);
         List<Appointment> appointments;
         
         if (date != null) {
@@ -81,13 +83,23 @@ public class AppointmentController {
         } else {
             appointments = appointmentService.getAppointmentsByDoctor(doctorId);
         }
+        System.out.println("DEBUG: Found " + appointments.size() + " appointments");
         
         return ResponseEntity.ok(appointments);
     }
 
     @GetMapping("/patient/{patientId}")
-    public ResponseEntity<List<Appointment>> getAppointmentsByPatient(@PathVariable Long patientId) {
-        List<Appointment> appointments = appointmentService.getAppointmentsByPatient(patientId);
+    public ResponseEntity<List<Appointment>> getAppointmentsByPatient(
+            @PathVariable Long patientId,
+            @RequestParam(required = false, defaultValue = "false") boolean upcoming) {
+        
+        List<Appointment> appointments;
+        if (upcoming) {
+            appointments = appointmentService.getUpcomingAppointmentsByPatient(patientId);
+        } else {
+            appointments = appointmentService.getAppointmentsByPatient(patientId);
+        }
+        
         return ResponseEntity.ok(appointments);
     }
 
@@ -109,5 +121,33 @@ public class AppointmentController {
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PutMapping("/{id}/reschedule")
+    public ResponseEntity<?> rescheduleAppointment(
+            @PathVariable Long id,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime newTime) {
+        try {
+            Appointment appointment = appointmentService.rescheduleAppointment(id, newTime);
+            return ResponseEntity.ok(appointment);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
+        }
+    }
+
+    @PutMapping("/{id}/cancel")
+    public ResponseEntity<?> cancelAppointment(
+            @PathVariable Long id,
+            @RequestParam(required = false) String reason) {
+        try {
+            Appointment appointment = appointmentService.cancelAppointment(id, reason != null ? reason : "Cancelled by patient");
+            return ResponseEntity.ok(appointment);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
+        }
+    }
+    @GetMapping("/debug/all")
+    public ResponseEntity<List<Appointment>> getAllAppointmentsDebug() {
+        return ResponseEntity.ok(appointmentService.getAllAppointmentsDebug());
     }
 }

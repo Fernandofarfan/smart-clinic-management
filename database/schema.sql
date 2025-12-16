@@ -93,26 +93,26 @@ CREATE TABLE IF NOT EXISTS admins (
 
 -- Insert sample admins
 INSERT INTO admins (username, email, password, role) VALUES
-('admin', 'admin@smartclinic.com', 'admin123', 'ADMIN'),
+('admin', 'admin@smartclinic.com', '$2b$10$vYV0mlHmkMQ3BUTDp4SVqeyIsNK0jyiuIV8ZR0.AO4M/or.HiWOEm', 'ADMIN'),
 ('superadmin', 'superadmin@smartclinic.com', 'super123', 'SUPER_ADMIN');
 
 -- Insert sample doctors
 INSERT INTO doctors (name, email, password, specialty, phone, available_times, bio, years_of_experience, consultation_fee) VALUES
-('Dr. John Smith', 'john.smith@smartclinic.com', 'doctor123', 'Cardiology', '+1-555-0101', '["09:00-10:00","10:00-11:00","14:00-15:00","15:00-16:00"]', 'Experienced cardiologist with 15 years of practice', 15, 150.00),
-('Dr. Sarah Johnson', 'sarah.johnson@smartclinic.com', 'doctor123', 'Pediatrics', '+1-555-0102', '["08:00-09:00","09:00-10:00","13:00-14:00","14:00-15:00"]', 'Specialist in child healthcare', 10, 120.00),
-('Dr. Michael Chen', 'michael.chen@smartclinic.com', 'doctor123', 'Orthopedics', '+1-555-0103', '["10:00-11:00","11:00-12:00","15:00-16:00","16:00-17:00"]', 'Expert in bone and joint treatments', 12, 140.00),
-('Dr. Emily Davis', 'emily.davis@smartclinic.com', 'doctor123', 'Dermatology', '+1-555-0104', '["09:00-10:00","11:00-12:00","14:00-15:00"]', 'Skin care specialist', 8, 130.00),
-('Dr. Robert Wilson', 'robert.wilson@smartclinic.com', 'doctor123', 'Neurology', '+1-555-0105', '["08:00-09:00","10:00-11:00","15:00-16:00"]', 'Neurological disorders expert', 20, 180.00);
+('Dr. John Smith', 'john.smith@smartclinic.com', '$2b$10$vYV0mlHmkMQ3BUTDp4SVqeyIsNK0jyiuIV8ZR0.AO4M/or.HiWOEm', 'Cardiology', '+1-555-0101', '["09:00-10:00","10:00-11:00","14:00-15:00","15:00-16:00"]', 'Experienced cardiologist with 15 years of practice', 15, 150.00),
+('Dr. Sarah Johnson', 'sarah.johnson@smartclinic.com', '$2b$10$vYV0mlHmkMQ3BUTDp4SVqeyIsNK0jyiuIV8ZR0.AO4M/or.HiWOEm', 'Pediatrics', '+1-555-0102', '["08:00-09:00","09:00-10:00","13:00-14:00","14:00-15:00"]', 'Specialist in child healthcare', 10, 120.00),
+('Dr. Michael Chen', 'michael.chen@smartclinic.com', '$2b$10$vYV0mlHmkMQ3BUTDp4SVqeyIsNK0jyiuIV8ZR0.AO4M/or.HiWOEm', 'Orthopedics', '+1-555-0103', '["10:00-11:00","11:00-12:00","15:00-16:00","16:00-17:00"]', 'Expert in bone and joint treatments', 12, 140.00),
+('Dr. Emily Davis', 'emily.davis@smartclinic.com', '$2b$10$vYV0mlHmkMQ3BUTDp4SVqeyIsNK0jyiuIV8ZR0.AO4M/or.HiWOEm', 'Dermatology', '+1-555-0104', '["09:00-10:00","11:00-12:00","14:00-15:00"]', 'Skin care specialist', 8, 130.00),
+('Dr. Robert Wilson', 'robert.wilson@smartclinic.com', '$2b$10$vYV0mlHmkMQ3BUTDp4SVqeyIsNK0jyiuIV8ZR0.AO4M/or.HiWOEm', 'Neurology', '+1-555-0105', '["08:00-09:00","10:00-11:00","15:00-16:00"]', 'Neurological disorders expert', 20, 180.00);
 
 -- Insert sample patients
 INSERT INTO patients (name, email, password, phone, date_of_birth, address, gender, blood_group) VALUES
-('Alice Brown', 'alice.brown@email.com', 'patient123', '+1-555-1001', '1990-05-15', '123 Main St, New York, NY', 'Female', 'A+'),
-('Bob Martinez', 'bob.martinez@email.com', 'patient123', '+1-555-1002', '1985-08-22', '456 Oak Ave, Los Angeles, CA', 'Male', 'O+'),
-('Carol White', 'carol.white@email.com', 'patient123', '+1-555-1003', '1992-03-10', '789 Pine Rd, Chicago, IL', 'Female', 'B+'),
-('David Lee', 'david.lee@email.com', 'patient123', '+1-555-1004', '1988-11-30', '321 Elm St, Houston, TX', 'Male', 'AB+'),
-('Emma Taylor', 'emma.taylor@email.com', 'patient123', '+1-555-1005', '1995-07-18', '654 Maple Dr, Phoenix, AZ', 'Female', 'A-'),
-('Frank Anderson', 'frank.anderson@email.com', 'patient123', '+1-555-1006', '1982-01-25', '987 Cedar Ln, Philadelphia, PA', 'Male', 'O-'),
-('Grace Thomas', 'grace.thomas@email.com', 'patient123', '+1-555-1007', '1998-09-05', '147 Birch Ct, San Antonio, TX', 'Female', 'B-');
+('Alice Brown', 'alice.brown@email.com', '$2b$10$vYV0mlHmkMQ3BUTDp4SVqeyIsNK0jyiuIV8ZR0.AO4M/or.HiWOEm', '+1-555-1001', '1990-05-15', '123 Main St, New York, NY', 'Female', 'A+'),
+('Bob Martinez', 'bob.martinez@email.com', '$2b$10$vYV0mlHmkMQ3BUTDp4SVqeyIsNK0jyiuIV8ZR0.AO4M/or.HiWOEm', '+1-555-1002', '1985-08-22', '456 Oak Ave, Los Angeles, CA', 'Male', 'O+'),
+('Carol White', 'carol.white@email.com', '$2b$10$vYV0mlHmkMQ3BUTDp4SVqeyIsNK0jyiuIV8ZR0.AO4M/or.HiWOEm', '+1-555-1003', '1992-03-10', '789 Pine Rd, Chicago, IL', 'Female', 'B+'),
+('David Lee', 'david.lee@email.com', '$2b$10$vYV0mlHmkMQ3BUTDp4SVqeyIsNK0jyiuIV8ZR0.AO4M/or.HiWOEm', '+1-555-1004', '1988-11-30', '321 Elm St, Houston, TX', 'Male', 'AB+'),
+('Emma Taylor', 'emma.taylor@email.com', '$2b$10$vYV0mlHmkMQ3BUTDp4SVqeyIsNK0jyiuIV8ZR0.AO4M/or.HiWOEm', '+1-555-1005', '1995-07-18', '654 Maple Dr, Phoenix, AZ', 'Female', 'A-'),
+('Frank Anderson', 'frank.anderson@email.com', '$2b$10$vYV0mlHmkMQ3BUTDp4SVqeyIsNK0jyiuIV8ZR0.AO4M/or.HiWOEm', '+1-555-1006', '1982-01-25', '987 Cedar Ln, Philadelphia, PA', 'Male', 'O-'),
+('Grace Thomas', 'grace.thomas@email.com', '$2b$10$vYV0mlHmkMQ3BUTDp4SVqeyIsNK0jyiuIV8ZR0.AO4M/or.HiWOEm', '+1-555-1007', '1998-09-05', '147 Birch Ct, San Antonio, TX', 'Female', 'B-');
 
 -- Insert sample appointments
 INSERT INTO appointments (doctor_id, patient_id, appointment_time, status, symptoms, notes) VALUES

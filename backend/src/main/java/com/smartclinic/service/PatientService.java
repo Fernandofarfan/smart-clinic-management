@@ -3,6 +3,7 @@ package com.smartclinic.service;
 import com.smartclinic.entity.Patient;
 import com.smartclinic.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -23,6 +24,9 @@ public class PatientService {
     @Autowired
     private TokenService tokenService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public Map<String, Object> validateLogin(String email, String password) {
         Map<String, Object> response = new HashMap<>();
         
@@ -36,7 +40,7 @@ public class PatientService {
         
         Patient patient = patientOpt.get();
         
-        if (!patient.getPassword().equals(password)) {
+        if (!passwordEncoder.matches(password, patient.getPassword())) {
             response.put("success", false);
             response.put("message", "Invalid email or password");
             return response;
@@ -48,7 +52,7 @@ public class PatientService {
             return response;
         }
         
-        String token = tokenService.generateToken(email);
+        String token = tokenService.generateToken(email, patient.getId(), "PATIENT");
         
         response.put("success", true);
         response.put("message", "Login successful");

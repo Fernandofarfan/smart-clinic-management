@@ -28,7 +28,7 @@ public class Appointment {
      * Many-to-One relationship with Doctor
      * Satisfies Q4 requirement for @ManyToOne relationship with Doctor
      */
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "doctor_id", nullable = false)
     @NotNull(message = "Doctor is required")
     private Doctor doctor;
@@ -37,7 +37,7 @@ public class Appointment {
      * Many-to-One relationship with Patient
      * Satisfies Q4 requirement for @ManyToOne relationship with Patient
      */
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "patient_id", nullable = false)
     @NotNull(message = "Patient is required")
     private Patient patient;
@@ -58,6 +58,12 @@ public class Appointment {
 
     @Column(length = 500)
     private String symptoms;
+
+    @Column(name = "cancellation_reason", length = 500)
+    private String cancellationReason;
+
+    @Column(name = "payment_status", length = 20)
+    private String paymentStatus; // PENDING, PAID, PARTIAL, REFUNDED
 
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();

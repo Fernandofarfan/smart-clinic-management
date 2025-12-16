@@ -3,6 +3,7 @@ package com.smartclinic.service;
 import com.smartclinic.entity.Admin;
 import com.smartclinic.repository.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -22,10 +23,19 @@ public class AdminService {
     @Autowired
     private TokenService tokenService;
 
-    public Map<String, Object> validateLogin(String email, String password) {
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public Map<String, Object> validateLogin(String emailOrUsername, String password) {
         Map<String, Object> response = new HashMap<>();
         
-        Optional<Admin> adminOpt = adminRepository.findByEmail(email);
+        // Try to find by email first
+        Optional<Admin> adminOpt = adminRepository.findByEmail(emailOrUsername);
+        
+        // If not found by email, try by username
+        if (adminOpt.isEmpty()) {
+            adminOpt = adminRepository.findByUsername(emailOrUsername);
+        }
         
         if (adminOpt.isEmpty()) {
             response.put("success", false);
@@ -35,7 +45,7 @@ public class AdminService {
         
         Admin admin = adminOpt.get();
         
-        if (!admin.getPassword().equals(password)) {
+        if (!passwordEncoder.matches(password, admin.getPassword())) {
             response.put("success", false);
             response.put("message", "Invalid email or password");
             return response;
@@ -47,7 +57,7 @@ public class AdminService {
             return response;
         }
         
-        String token = tokenService.generateToken(email);
+        String token = tokenService.generateToken(admin.getEmail(), admin.getId(), "ADMIN");
         
         response.put("success", true);
         response.put("message", "Login successful");

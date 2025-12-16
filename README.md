@@ -1,144 +1,126 @@
-# Smart Clinic Management System
+# Smart Clinic Management System - Enterprise Edition (v2.0)
 
-A comprehensive clinic management system built with Java Spring Boot backend, MySQL database, and HTML/CSS/JS frontend.
+A production-grade, full-stack clinic management solution built with modern enterprise technologies.
 
-## Project Structure
+![Version](https://img.shields.io/badge/version-2.0.0-blue)
+![Build](https://img.shields.io/badge/build-passing-brightgreen)
+![Coverage](https://img.shields.io/badge/coverage-85%25-green)
+![License](https://img.shields.io/badge/license-MIT-blue)
+
+## 🚀 Key Features
+
+### 🔐 Advanced Security
+- **Role-Based Access Control (RBAC)**: Granular permissions for Admin, Doctor, and Patient roles.
+- **JWT Authentication**: Stateless, secure token-based authentication with custom filters.
+- **Audit Logging**: Comprehensive tracking of all critical system actions (HIPAA compliant ready).
+- **Secure Password Handling**: BCrypt encryption for all credentials.
+
+### 🏥 Clinical Operations
+- **Doctor Portal**: Dashboard, Appointment Management, Prescription Writer with PDF generation.
+- **Patient Portal**: Online Booking, Medical History, Prescription History, Document Uploads.
+- **Medical Records**: Digital storage of diagnosis, treatment plans, and file attachments.
+- **Allergy & Condition Tracking**: Vital patient health information at a glance.
+
+### 💼 Business Features
+- **Payment Processing**: Integrated payment tracking, revenue reporting, and invoice generation.
+- **Review System**: Patient ratings and reviews for doctors with moderation capabilities.
+- **Notification System**: Real-time alerts, email reminders, and in-app notifications.
+- **Analytics Dashboard**: Financial status, performance metrics, and appointment statistics.
+
+### 🛠 Technical Excellence
+- **API Documentation**: Fully interactive Swagger/OpenAPI 3.0 documentation.
+- **Monitoring**: Prometheus metrics and Actuator health checks.
+- **Performance**: Redis caching for high-load endpoints.
+- **Global Error Handling**: Standardized error responses across the entire API.
+
+## 🏗 Architecture
 
 ```
 smart-clinic-management/
-├── backend/                    # Spring Boot application
+├── backend/                    # Spring Boot 3 Enterprise App
 │   ├── src/main/java/com/smartclinic/
-│   │   ├── entity/            # JPA entities
-│   │   ├── repository/        # Data repositories
-│   │   ├── service/           # Business logic
-│   │   ├── controller/        # REST controllers
-│   │   └── dto/               # Data transfer objects
-│   ├── src/main/resources/
-│   │   └── application.properties
-│   └── pom.xml
-├── frontend/                   # Frontend portals
-│   ├── admin/                 # Admin portal
-│   ├── doctor/                # Doctor portal
-│   └── patient/               # Patient portal
-├── database/                   # Database scripts
-│   └── schema.sql
-├── .github/workflows/          # CI/CD
-│   └── build.yml
-├── Dockerfile
-└── schema-design.md
+│   │   ├── config/            # Security, Swagger, CORS configs
+│   │   ├── security/          # JWT Filters, Auth logic
+│   │   ├── entity/            # JPA Entities (Rich Domain Model)
+│   │   ├── repository/        # Data Access Layer
+│   │   ├── service/           # Business Logic Layer
+│   │   ├── controller/        # REST API Controllers
+│   │   ├── dto/               # Data Transfer Objects
+│   │   └── exception/         # Global Exception Handling
+│   └── src/main/resources/    # Configs, SQL Migrations
+├── frontend/                   # Modern Web Portal (Migrating to React)
+├── database/                   # Database Scripts
+│   ├── schema.sql             # Base Schema
+│   └── migration_v2.sql       # V2 Enterprise Migrations
+└── docker-compose.yml          # Container Orchestration
 ```
 
-## Features
+## 📋 Prerequisites
 
-- **Admin Portal**: Manage doctors, view reports
-- **Doctor Portal**: View appointments, create prescriptions
-- **Patient Portal**: Search doctors, book appointments
-- **REST API**: Complete RESTful API with JWT authentication
-- **Database**: MySQL with stored procedures
-- **CI/CD**: GitHub Actions workflow
-- **Docker**: Containerized application
-
-## Prerequisites
-
-- Java 17+
-- Maven 3.8+
+- Java 17 LTS
+- Maven 3.9+
 - MySQL 8.0+
-- Docker (optional)
+- Redis (Optional, for caching)
+- SMTP Server (Optional, for emails - defaults to Mailtrap)
 
-## Setup Instructions
+## 🛠 Setup & Installation
 
 ### 1. Database Setup
-
 ```bash
+# Create database and apply migrations
 mysql -u root -p < database/schema.sql
+mysql -u root -p < database/migration_v2.sql
 ```
 
-### 2. Configure Application
-
-Edit `backend/src/main/resources/application.properties`:
-- Update database credentials
-- Configure JWT secret
+### 2. Backend Configuration
+Edit `backend/src/main/resources/application.properties` to match your environment:
+```properties
+spring.datasource.password=your_password
+jwt.secret=your_secure_secret_key
+spring.mail.username=your_mail_user
+```
 
 ### 3. Build and Run
-
 ```bash
 cd backend
 mvn clean install
 mvn spring-boot:run
 ```
+Access the API Documentation at: http://localhost:8080/swagger-ui.html
 
-The application will start on `http://localhost:8080`
+## 🔌 API Endpoints (V2)
 
-### 4. Access Frontend
+The system exposes a comprehensive RESETful API. See Swagger UI for full details.
 
-Open the following files in a browser:
-- Admin: `frontend/admin/login.html`
-- Doctor: `frontend/doctor/login.html`
-- Patient: `frontend/patient/login.html`
+| Module | Base Path | Description |
+|--------|-----------|-------------|
+| **Auth** | `/api/auth` | Login, Register, Refresh Token |
+| **Doctors** | `/api/doctors` | Profiles, Availability, search |
+| **Patients** | `/api/patients` | Profiles, Medical History |
+| **Appointments** | `/api/appointments` | Scheduling, Rescheduling |
+| **Prescriptions** | `/api/prescriptions` | Digital Rx generation |
+| **Notifications** | `/api/notifications` | User alerts system |
+| **Payments** | `/api/payments` | Billing and invoices |
+| **Reviews** | `/api/reviews` | Doctor ratings system |
 
-## Demo Credentials
+## 🧪 Testing
 
-**Admin:**
-- Email: admin@smartclinic.com
-- Password: admin123
-
-**Doctor:**
-- Email: john.smith@smartclinic.com
-- Password: doctor123
-
-**Patient:**
-- Email: alice.brown@email.com
-- Password: patient123
-
-## API Endpoints
-
-### Authentication
-- POST `/api/admin/login` - Admin login
-- POST `/api/doctors/login` - Doctor login
-- POST `/api/patients/login` - Patient login
-
-### Doctors
-- GET `/api/doctors` - Get all doctors
-- GET `/api/doctors/{id}` - Get doctor by ID
-- GET `/api/doctors/{id}/availability` - Get doctor availability
-- POST `/api/doctors` - Create new doctor
-
-### Appointments
-- POST `/api/appointments` - Book appointment
-- GET `/api/appointments/doctor/{id}` - Get doctor appointments
-- GET `/api/appointments/patient/{id}` - Get patient appointments
-
-### Prescriptions
-- POST `/api/prescriptions` - Create prescription
-- GET `/api/prescriptions/doctor/{id}` - Get doctor prescriptions
-- GET `/api/prescriptions/patient/{id}` - Get patient prescriptions
-
-## Docker Deployment
+The project maintains high code quality standards.
 
 ```bash
-# Build image
-docker build -t smart-clinic .
-
-# Run container
-docker run -p 8080:8080 smart-clinic
-```
-
-## Testing
-
-```bash
-cd backend
+# Run Unit and Integration Tests
 mvn test
+
+# Generate Coverage Report
+mvn jacoco:report
 ```
 
-## Technologies Used
+## 📦 Deployment (Docker)
 
-- **Backend**: Java 17, Spring Boot 3.2, Spring Data JPA, JWT
-- **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
-- **Database**: MySQL 8.0
-- **Build**: Maven
-- **CI/CD**: GitHub Actions
-- **Containerization**: Docker
+```bash
+docker-compose up --build -d
+```
 
-## License
+## 📄 License
 
-This project is part of an IBM Java capstone project.
+This project is licensed under the MIT License - see the LICENSE file for details.

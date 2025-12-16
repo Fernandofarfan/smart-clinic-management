@@ -2,7 +2,7 @@
 # Deliverable Q11 (5 points)
 
 # Stage 1: Build stage
-FROM maven:3.8-openjdk-17 AS build
+FROM maven:3.9-eclipse-temurin-17 AS build
 
 WORKDIR /app
 
@@ -17,7 +17,7 @@ COPY backend/src ./src
 RUN mvn clean package -DskipTests
 
 # Stage 2: Runtime stage
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jre-jammy
 
 WORKDIR /app
 

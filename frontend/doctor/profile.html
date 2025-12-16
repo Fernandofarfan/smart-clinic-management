@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Doctor Portal</title>
+    <link rel="stylesheet" href="../admin/styles.css">
+</head>
+
+<body>
+    <div class="dashboard">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-small">
+                    <svg width="40" height="40" viewBox="0 0 60 60" fill="none">
+                        <circle cx="30" cy="30" r="28" fill="#10B981" />
+                        <path d="M30 15 L30 45 M15 30 L45 30" stroke="white" stroke-width="4" stroke-linecap="round" />
+                    </svg>
+                </div>
+                <h2>Doctor Panel</h2>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="appointments.html">
+                        <span class="icon">📅</span>
+                        <span>My Appointments</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="prescriptions.html">
+                        <span class="icon">💊</span>
+                        <span>Prescriptions</span>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a href="profile.html">
+                        <span class="icon">👤</span>
+                        <span>Profile</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <button onclick="logout()" class="btn-logout">Logout</button>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <header class="content-header">
+                <h1>My Profile</h1>
+                <div class="user-info">
+                    <span id="doctorName">Doctor</span>
+                </div>
+            </header>
+
+            <div class="content-body">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Doctor Information</h2>
+                    </div>
+                    <div class="card-body">
+                        <div id="profileInfo">
+                            <p>Loading profile...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:8080/api';
+        const token = localStorage.getItem('doctorToken');
+        const doctorData = JSON.parse(localStorage.getItem('doctorData') || '{}');
+
+        if (!token) {
+            window.location.href = 'login.html';
+        }
+
+        if (doctorData.name) {
+            document.getElementById('doctorName').textContent = doctorData.name;
+        }
+
+        function renderProfile() {
+            const profileDiv = document.getElementById('profileInfo');
+            profileDiv.innerHTML = `
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" value="${doctorData.name || ''}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" value="${doctorData.email || ''}" readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Specialty</label>
+                        <input type="text" value="${doctorData.specialty || ''}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="text" value="${doctorData.phone || ''}" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Bio</label>
+                    <textarea readonly rows="3">${doctorData.bio || ''}</textarea>
+                </div>
+            `;
+        }
+
+        function logout() {
+            localStorage.removeItem('doctorToken');
+            localStorage.removeItem('doctorData');
+            window.location.href = 'login.html';
+        }
+
+        renderProfile();
+    </script>
+</body>
+
+</html>

@@ -3,6 +3,7 @@ package com.smartclinic.service;
 import com.smartclinic.entity.Doctor;
 import com.smartclinic.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -22,6 +23,9 @@ public class DoctorService {
 
     @Autowired
     private TokenService tokenService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /**
      * Get available times for a doctor on a specific date
@@ -77,7 +81,7 @@ public class DoctorService {
         Doctor doctor = doctorOpt.get();
         
         // Simple password validation (in production, use BCrypt)
-        if (!doctor.getPassword().equals(password)) {
+        if (!passwordEncoder.matches(password, doctor.getPassword())) {
             response.put("success", false);
             response.put("message", "Invalid email or password");
             return response;
@@ -90,7 +94,7 @@ public class DoctorService {
         }
         
         // Generate JWT token
-        String token = tokenService.generateToken(email);
+        String token = tokenService.generateToken(email, doctor.getId(), "DOCTOR");
         
         response.put("success", true);
         response.put("message", "Login successful");

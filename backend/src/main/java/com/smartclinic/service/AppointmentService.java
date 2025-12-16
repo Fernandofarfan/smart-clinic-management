@@ -70,6 +70,7 @@ public class AppointmentService {
         LocalDateTime startOfDay = date.atStartOfDay();
         LocalDateTime endOfDay = date.atTime(23, 59, 59);
         
+        System.out.println("DEBUG: Querying range: " + startOfDay + " to " + endOfDay);
         return appointmentRepository.findByDoctorAndDateRange(doctorId, startOfDay, endOfDay);
     }
 
@@ -79,6 +80,10 @@ public class AppointmentService {
 
     public List<Appointment> getAppointmentsByPatient(Long patientId) {
         return appointmentRepository.findByPatientId(patientId);
+    }
+
+    public List<Appointment> getUpcomingAppointmentsByPatient(Long patientId) {
+        return appointmentRepository.findByPatientIdAndAppointmentTimeAfter(patientId, LocalDateTime.now());
     }
 
     public Optional<Appointment> getAppointmentById(Long id) {
@@ -97,5 +102,55 @@ public class AppointmentService {
         appointment.setUpdatedAt(LocalDateTime.now());
         
         return appointmentRepository.save(appointment);
+    }
+
+    /**
+     * Cancel an appointment with a reason
+     */
+    public Appointment cancelAppointment(Long id, String reason) {
+        Optional<Appointment> appointmentOpt = appointmentRepository.findById(id);
+        
+        if (appointmentOpt.isEmpty()) {
+            throw new RuntimeException("Appointment not found");
+        }
+        
+        Appointment appointment = appointmentOpt.get();
+        if ("COMPLETED".equals(appointment.getStatus())) {
+            throw new IllegalStateException("Cannot cancel a completed appointment");
+        }
+        
+        appointment.setStatus("CANCELLED");
+        appointment.setCancellationReason(reason);
+        appointment.setUpdatedAt(LocalDateTime.now());
+        
+        return appointmentRepository.save(appointment);
+    }
+
+    /**
+     * Reschedule an appointment
+     */
+    public Appointment rescheduleAppointment(Long id, LocalDateTime newTime) {
+        Optional<Appointment> appointmentOpt = appointmentRepository.findById(id);
+        
+        if (appointmentOpt.isEmpty()) {
+            throw new RuntimeException("Appointment not found");
+        }
+        
+        Appointment appointment = appointmentOpt.get();
+        if ("COMPLETED".equals(appointment.getStatus()) || "CANCELLED".equals(appointment.getStatus())) {
+            throw new IllegalStateException("Cannot reschedule a completed or cancelled appointment");
+        }
+        
+        // Optimize: Check doctor availability here before rescheduling
+        // boolean isAvailable = checkAvailability(appointment.getDoctor().getId(), newTime);
+        // if (!isAvailable) throw new RuntimeException("Doctor is not available at this time");
+        
+        appointment.setAppointmentTime(newTime);
+        appointment.setUpdatedAt(LocalDateTime.now());
+        
+        return appointmentRepository.save(appointment);
+    }
+    public List<Appointment> getAllAppointmentsDebug() {
+        return appointmentRepository.findAll();
     }
 }

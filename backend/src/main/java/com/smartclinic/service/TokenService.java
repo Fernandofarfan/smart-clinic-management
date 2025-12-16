@@ -32,9 +32,19 @@ public class TokenService {
      * @param email User's email address
      * @return JWT token string
      */
-    public String generateToken(String email) {
+    /**
+     * Generate JWT token using user details
+     * 
+     * @param email User's email address
+     * @param userId User's ID
+     * @param userType User's type (ADMIN, DOCTOR, PATIENT)
+     * @return JWT token string
+     */
+    public String generateToken(String email, Long userId, String userType) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("email", email);
+        claims.put("userId", userId);
+        claims.put("userType", userType);
         
         return Jwts.builder()
                 .claims(claims)
@@ -43,6 +53,11 @@ public class TokenService {
                 .expiration(new Date(System.currentTimeMillis() + jwtExpiration))
                 .signWith(getSigningKey())
                 .compact();
+    }
+    
+    // Legacy method for backward compatibility
+    public String generateToken(String email) {
+        return generateToken(email, 0L, "UNKNOWN");
     }
 
     /**
@@ -87,5 +102,29 @@ public class TokenService {
                 .parseSignedClaims(token)
                 .getPayload();
         return claims.getSubject();
+    }
+    
+    /**
+     * Extract user ID from JWT token
+     */
+    public String getUserIdFromToken(String token) {
+        Claims claims = Jwts.parser()
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+        return String.valueOf(claims.get("userId"));
+    }
+    
+    /**
+     * Extract user type from JWT token
+     */
+    public String getUserTypeFromToken(String token) {
+        Claims claims = Jwts.parser()
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+        return (String) claims.get("userType");
     }
 }

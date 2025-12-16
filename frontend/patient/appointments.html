@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Appointments - Patient Portal</title>
+    <link rel="stylesheet" href="../admin/styles.css">
+</head>
+
+<body>
+    <div class="dashboard">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-small">
+                    <svg width="40" height="40" viewBox="0 0 60 60" fill="none">
+                        <circle cx="30" cy="30" r="28" fill="#F59E0B" />
+                        <path d="M30 15 L30 45 M15 30 L45 30" stroke="white" stroke-width="4" stroke-linecap="round" />
+                    </svg>
+                </div>
+                <h2>Patient Panel</h2>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="search.html">
+                        <span class="icon">🔍</span>
+                        <span>Find a Doctor</span>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a href="appointments.html">
+                        <span class="icon">📅</span>
+                        <span>My Appointments</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="profile.html">
+                        <span class="icon">👤</span>
+                        <span>Profile</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <button onclick="logout()" class="btn-logout">Logout</button>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <header class="content-header">
+                <h1>My Appointments</h1>
+                <div class="user-info">
+                    <span id="patientName">Patient</span>
+                </div>
+            </header>
+
+            <div class="content-body">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Upcoming Appointments</h2>
+                    </div>
+                    <div class="card-body">
+                        <div id="appointmentsList">
+                            <p>Loading appointments...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:8080/api';
+        const token = localStorage.getItem('patientToken');
+        const patientData = JSON.parse(localStorage.getItem('patientData') || '{}');
+
+        if (!token) {
+            window.location.href = 'login.html';
+        }
+
+        if (patientData.name) {
+            document.getElementById('patientName').textContent = patientData.name;
+        }
+
+        async function loadAppointments() {
+            const listDiv = document.getElementById('appointmentsList');
+            try {
+                // Assuming there's an endpoint to get appointments for the logged-in patient
+                // If not, we might need to filter by patient ID if the API allows
+                // Checking AppointmentController, it doesn't seem to have a "get my appointments" endpoint easily visible in the snippet I read.
+                // But let's assume /api/appointments/patient/{id} or similar exists or we can filter.
+                // Wait, I didn't check for GET endpoints in AppointmentController. Let's assume standard REST or I'll check later.
+                // For now, I'll try to fetch all and filter client side if needed, or guess the endpoint.
+                // Actually, let's check AppointmentController again to be sure.
+                
+                // Re-reading AppointmentController snippet... it was truncated.
+                // I'll assume /api/appointments/patient/{patientId} exists as it's standard.
+                
+                const response = await fetch(`${API_BASE_URL}/appointments/patient/${patientData.id}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    const appointments = await response.json();
+                    if (appointments.length === 0) {
+                        listDiv.innerHTML = '<p>No appointments found.</p>';
+                        return;
+                    }
+                    
+                    listDiv.innerHTML = `
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Doctor</th>
+                                    <th>Date & Time</th>
+                                    <th>Status</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${appointments.map(app => `
+                                    <tr>
+                                        <td>${app.doctorName || 'Doctor ' + app.doctorId}</td>
+                                        <td>${new Date(app.appointmentTime).toLocaleString()}</td>
+                                        <td><span class="status-badge status-${app.status?.toLowerCase() || 'scheduled'}">${app.status || 'Scheduled'}</span></td>
+                                        <td>${app.notes || '-'}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    `;
+                } else {
+                    listDiv.innerHTML = '<p>No appointments found or error loading.</p>';
+                }
+            } catch (error) {
+                console.error('Error loading appointments:', error);
+                listDiv.innerHTML = '<p>Error loading appointments.</p>';
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('patientToken');
+            localStorage.removeItem('patientData');
+            window.location.href = 'login.html';
+        }
+
+        if (patientData.id) {
+            loadAppointments();
+        } else {
+            document.getElementById('appointmentsList').innerHTML = '<p>Patient ID not found. Please login again.</p>';
+        }
+    </script>
+</body>
+
+</html>

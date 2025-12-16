@@ -64,19 +64,19 @@
 
             <ul class="nav-menu">
                 <li class="nav-item active">
-                    <a href="#appointments">
+                    <a href="appointments.html">
                         <span class="icon">📅</span>
                         <span>My Appointments</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#prescriptions">
+                    <a href="prescriptions.html">
                         <span class="icon">💊</span>
                         <span>Prescriptions</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#profile">
+                    <a href="profile.html">
                         <span class="icon">👤</span>
                         <span>Profile</span>
                     </a>
@@ -164,7 +164,8 @@
                     </tr>
                 `).join('');
             } catch (error) {
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Error loading appointments</td></tr>';
+                console.error('Error loading appointments:', error);
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: red;">Error loading appointments: ${error.message}</td></tr>`;
             }
         }
 
