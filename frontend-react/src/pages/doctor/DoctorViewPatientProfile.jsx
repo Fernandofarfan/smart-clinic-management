@@ -24,8 +24,8 @@ const DoctorViewPatientProfile = () => {
         fetchPatient();
     }, [patientId]);
 
-    if (loading) return <div>Loading profile...</div>;
-    if (!patient) return <div>Patient not found</div>;
+    if (loading) return <div>Cargando perfil...</div>;
+    if (!patient) return <div>Paciente no encontrado</div>;
 
     return (
         <div className="max-w-4xl mx-auto space-y-6">
@@ -34,7 +34,7 @@ const DoctorViewPatientProfile = () => {
                 className="flex items-center text-surface-500 hover:text-primary-600 transition-colors"
             >
                 <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Patients
+                Volver a Pacientes
             </button>
 
             <div className="bg-white rounded-2xl shadow-sm border border-surface-200 overflow-hidden">
@@ -49,7 +49,7 @@ const DoctorViewPatientProfile = () => {
                         </div>
                         <div className="mb-2">
                             <span className={`px-3 py-1 text-sm font-medium rounded-full border ${patient.isActive ? 'bg-green-50 text-green-700 border-green-100' : 'bg-red-50 text-red-700 border-red-100'}`}>
-                                {patient.isActive ? 'Active Patient' : 'Inactive'}
+                                {patient.isActive ? 'Paciente Activo' : 'Inactivo'}
                             </span>
                         </div>
                     </div>
@@ -57,12 +57,12 @@ const DoctorViewPatientProfile = () => {
                     <div className="space-y-6">
                         <div>
                             <h1 className="text-2xl font-bold text-surface-900">{patient.name}</h1>
-                            <p className="text-surface-500">Patient ID: #{patient.id}</p>
+                            <p className="text-surface-500">ID Paciente: #{patient.id}</p>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="space-y-4">
-                                <h3 className="text-sm font-semibold text-surface-900 uppercase tracking-wider">Contact Information</h3>
+                                <h3 className="text-sm font-semibold text-surface-900 uppercase tracking-wider">Información de Contacto</h3>
 
                                 <div className="flex items-center space-x-3 text-surface-600">
                                     <div className="p-2 bg-primary-50 text-primary-600 rounded-lg">
@@ -75,25 +75,25 @@ const DoctorViewPatientProfile = () => {
                                     <div className="p-2 bg-primary-50 text-primary-600 rounded-lg">
                                         <Phone className="w-5 h-5" />
                                     </div>
-                                    <span>{patient.phone || 'No phone number provided'}</span>
+                                    <span>{patient.phone || 'Sin número de teléfono'}</span>
                                 </div>
                             </div>
 
                             <div className="space-y-4">
-                                <h3 className="text-sm font-semibold text-surface-900 uppercase tracking-wider">Account Details</h3>
+                                <h3 className="text-sm font-semibold text-surface-900 uppercase tracking-wider">Detalles de la Cuenta</h3>
 
                                 <div className="flex items-center space-x-3 text-surface-600">
                                     <div className="p-2 bg-secondary-50 text-secondary-600 rounded-lg">
                                         <Shield className="w-5 h-5" />
                                     </div>
-                                    <span>Role: Patient</span>
+                                    <span>Rol: Paciente</span>
                                 </div>
 
                                 <div className="flex items-center space-x-3 text-surface-600">
                                     <div className="p-2 bg-secondary-50 text-secondary-600 rounded-lg">
                                         <Calendar className="w-5 h-5" />
                                     </div>
-                                    <span>Member since: {new Date().getFullYear()}</span>
+                                    <span>Miembro desde: {new Date().getFullYear()}</span>
                                 </div>
                             </div>
                         </div>

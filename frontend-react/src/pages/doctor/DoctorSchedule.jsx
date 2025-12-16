@@ -3,22 +3,22 @@ import { Calendar as CalendarIcon, Clock, ChevronLeft, ChevronRight } from 'luci
 
 const DoctorSchedule = () => {
     // Mock Schedule Data
-    const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const weekDays = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
     const timeSlots = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'];
 
     return (
         <div className="space-y-6">
             <div className="flex justify-between items-center">
                 <div>
-                    <h2 className="text-2xl font-bold text-surface-900">Weekly Schedule</h2>
-                    <p className="text-surface-500">Manage your availability and appointments</p>
+                    <h2 className="text-2xl font-bold text-surface-900">Agenda Semanal</h2>
+                    <p className="text-surface-500">Gestiona tu disponibilidad y citas</p>
                 </div>
                 <div className="flex space-x-2">
                     <button className="p-2 border border-surface-200 rounded-lg hover:bg-surface-50">
                         <ChevronLeft className="w-5 h-5 text-surface-600" />
                     </button>
                     <button className="px-4 py-2 border border-surface-200 rounded-lg text-surface-700 font-medium hover:bg-surface-50">
-                        Today
+                        Hoy
                     </button>
                     <button className="p-2 border border-surface-200 rounded-lg hover:bg-surface-50">
                         <ChevronRight className="w-5 h-5 text-surface-600" />
@@ -28,7 +28,7 @@ const DoctorSchedule = () => {
 
             <div className="bg-white rounded-2xl shadow-sm border border-surface-200 overflow-hidden">
                 <div className="grid grid-cols-8 divide-x divide-surface-100 border-b border-surface-100">
-                    <div className="p-4 text-xs font-semibold text-surface-400 text-center uppercase tracking-wider">Time</div>
+                    <div className="p-4 text-xs font-semibold text-surface-400 text-center uppercase tracking-wider">Hora</div>
                     {weekDays.map(day => (
                         <div key={day} className="p-4 text-center">
                             <span className="block text-sm font-semibold text-surface-900">{day}</span>

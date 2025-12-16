@@ -47,10 +47,10 @@ const PatientDashboard = () => {
     }, [user]);
 
     const getNextAppointmentText = () => {
-        if (stats.nextAppointmentDays === -1) return "No upcoming";
-        if (stats.nextAppointmentDays === 0) return "Today";
-        if (stats.nextAppointmentDays === 1) return "Tomorrow";
-        return `In ${stats.nextAppointmentDays} days`;
+        if (stats.nextAppointmentDays === -1) return "Sin próximas";
+        if (stats.nextAppointmentDays === 0) return "Hoy";
+        if (stats.nextAppointmentDays === 1) return "Mañana";
+        return `En ${stats.nextAppointmentDays} días`;
     };
 
     const [rescheduleModal, setRescheduleModal] = useState({ show: false, appointmentId: null, currentDatetoISO: '' });
@@ -79,10 +79,10 @@ const PatientDashboard = () => {
             setAppointments(apptResponse.data);
 
             setRescheduleModal({ show: false, appointmentId: null, currentDatetoISO: '' });
-            alert("Appointment rescheduled successfully!");
+            alert("¡Cita reprogramada con éxito!");
         } catch (error) {
             console.error("Reschedule failed", error);
-            alert("Failed to reschedule: " + (error.response?.data?.message || error.message));
+            alert("Error al reprogramar: " + (error.response?.data?.message || error.message));
         } finally {
             setLoading(false);
         }
@@ -160,15 +160,15 @@ const PatientDashboard = () => {
             {uploadModal.show && (
                 <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-center justify-center">
                     <div className="bg-white p-5 rounded-lg shadow-xl w-96">
-                        <h3 className="text-lg font-bold mb-4">Upload Document</h3>
+                        <h3 className="text-lg font-bold mb-4">Subir Documento</h3>
                         <div className="mb-4">
                             <input type="file" onChange={handleFileChange} className="mb-2 w-full" />
-                            <p className="text-xs text-gray-500">Supported formats: PDF, JPG, PNG</p>
+                            <p className="text-xs text-gray-500">Formatos soportados: PDF, JPG, PNG</p>
                         </div>
 
                         <div className="max-h-40 overflow-y-auto mb-4 border-t pt-2">
-                            <h4 className="text-sm font-semibold mb-2">My Documents</h4>
-                            {documents.length === 0 ? <p className="text-xs text-gray-400">No documents yet.</p> : (
+                            <h4 className="text-sm font-semibold mb-2">Mis Documentos</h4>
+                            {documents.length === 0 ? <p className="text-xs text-gray-400">Sin documentos aún.</p> : (
                                 <ul className="text-sm space-y-1">
                                     {documents.map(doc => (
                                         <li key={doc.id} className="flex justify-between">
@@ -181,8 +181,8 @@ const PatientDashboard = () => {
                         </div>
 
                         <div className="flex justify-end gap-2">
-                            <button onClick={() => setUploadModal({ show: false, file: null })} className="bg-gray-300 px-4 py-2 rounded">Cancel</button>
-                            <button onClick={confirmUpload} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Upload</button>
+                            <button onClick={() => setUploadModal({ show: false, file: null })} className="bg-gray-300 px-4 py-2 rounded">Cancelar</button>
+                            <button onClick={confirmUpload} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Subir</button>
                         </div>
                     </div>
                 </div>
@@ -192,9 +192,9 @@ const PatientDashboard = () => {
             {cancelModal.show && (
                 <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-center justify-center">
                     <div className="bg-white p-5 rounded-lg shadow-xl w-96">
-                        <h3 className="text-lg font-bold mb-4 text-red-600">Cancel Appointment</h3>
+                        <h3 className="text-lg font-bold mb-4 text-red-600">Cancelar Cita</h3>
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2">Reason (Optional)</label>
+                            <label className="block text-gray-700 text-sm font-bold mb-2">Razón (Opcional)</label>
                             <textarea
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 rows="3"
@@ -208,13 +208,13 @@ const PatientDashboard = () => {
                                 onClick={() => setCancelModal({ show: false, appointmentId: null })}
                                 className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
                             >
-                                Back
+                                Volver
                             </button>
                             <button
                                 onClick={confirmCancel}
                                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                             >
-                                Cancel Appointment
+                                Cancelar Cita
                             </button>
                         </div>
                     </div>
@@ -225,9 +225,9 @@ const PatientDashboard = () => {
             {rescheduleModal.show && (
                 <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-center justify-center">
                     <div className="bg-white p-5 rounded-lg shadow-xl w-96">
-                        <h3 className="text-lg font-bold mb-4">Reschedule Appointment</h3>
+                        <h3 className="text-lg font-bold mb-4">Reprogramar Cita</h3>
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2">New Date & Time</label>
+                            <label className="block text-gray-700 text-sm font-bold mb-2">Nueva Fecha y Hora</label>
                             <input
                                 type="datetime-local"
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -240,13 +240,13 @@ const PatientDashboard = () => {
                                 onClick={() => setRescheduleModal({ show: false, appointmentId: null })}
                                 className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
                             >
-                                Cancel
+                                Cancelar
                             </button>
                             <button
                                 onClick={confirmReschedule}
                                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                             >
-                                Confirm
+                                Confirmar
                             </button>
                         </div>
                     </div>
@@ -260,35 +260,35 @@ const PatientDashboard = () => {
                 </div>
             )}
 
-            <h2 className="text-2xl font-bold text-gray-800">My Health Dashboard</h2>
+            <h2 className="text-2xl font-bold text-gray-800">Mi Panel de Salud</h2>
 
             {/* Stats Row */}
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-                <StatsCard title="Next Appointment" value={loading ? "..." : getNextAppointmentText()} icon={Calendar} color="#4F46E5" />
-                <StatsCard title="Prescriptions" value={loading ? "..." : `${stats.activePrescriptions} Active`} icon={FileText} color="#10B981" />
-                <StatsCard title="Medical Records" value={loading ? "..." : `${stats.medicalRecords} Files`} icon={Activity} color="#F59E0B" />
-                <StatsCard title="Notifications" value={loading ? "..." : `${stats.newNotifications} New`} icon={AlertCircle} color="#EF4444" />
+                <StatsCard title="Próxima Cita" value={loading ? "..." : getNextAppointmentText()} icon={Calendar} color="#4F46E5" />
+                <StatsCard title="Recetas" value={loading ? "..." : `${stats.activePrescriptions} Activas`} icon={FileText} color="#10B981" />
+                <StatsCard title="Historial Médico" value={loading ? "..." : `${stats.medicalRecords} Archivos`} icon={Activity} color="#F59E0B" />
+                <StatsCard title="Notificaciones" value={loading ? "..." : `${stats.newNotifications} Nuevas`} icon={AlertCircle} color="#EF4444" />
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* My Appointments Table */}
                 <div className="lg:col-span-2 bg-white shadow rounded-lg p-6">
-                    <h3 className="text-lg font-medium text-gray-900 mb-4">My Appointments</h3>
+                    <h3 className="text-lg font-medium text-gray-900 mb-4">Mis Citas</h3>
                     <div className="overflow-x-auto">
                         <table className="min-w-full divide-y divide-gray-200">
                             <thead>
                                 <tr>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Doctor</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acción</th>
                                 </tr>
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-200">
                                 {appointments.length === 0 ? (
                                     <tr>
                                         <td colSpan="4" className="px-6 py-4 text-center text-sm text-gray-500">
-                                            No appointments found.
+                                            No se encontraron citas.
                                         </td>
                                     </tr>
                                 ) : (
@@ -313,13 +313,13 @@ const PatientDashboard = () => {
                                                     onClick={() => handleRescheduleClick(apt)}
                                                     className="text-indigo-600 hover:text-indigo-900 mr-4"
                                                 >
-                                                    Reschedule
+                                                    Reprogramar
                                                 </button>
                                                 <button
                                                     onClick={() => handleCancelClick(apt)}
                                                     className="text-red-600 hover:text-red-900"
                                                 >
-                                                    Cancel
+                                                    Cancelar
                                                 </button>
                                                 {apt.status === 'COMPLETED' && (
                                                     <button
@@ -355,32 +355,32 @@ const PatientDashboard = () => {
 
                 {/* Quick Actions */}
                 <div className="bg-white shadow rounded-lg p-6">
-                    <h3 className="text-lg font-medium text-gray-900 mb-4">Quick Actions</h3>
+                    <h3 className="text-lg font-medium text-gray-900 mb-4">Acciones Rápidas</h3>
                     <div className="space-y-4">
                         <button
                             onClick={() => navigate('/book-appointment')}
                             className="w-full bg-indigo-600 border border-transparent rounded-md py-2 px-4 flex items-center justify-center text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
-                            Book New Appointment
+                            Reservar Nueva Cita
                         </button>
                         <button
                             onClick={handleUploadClick}
                             className="w-full bg-white border border-gray-300 rounded-md py-2 px-4 flex items-center justify-center text-sm font-medium text-gray-700 hover:bg-gray-50"
                         >
-                            Upload Document
+                            Subir Documento
                         </button>
                         <button
                             onClick={() => {
                                 const history = appointments.filter(a => new Date(a.appointmentTime) < new Date());
-                                if (history.length === 0) alert("No past appointment history found.");
+                                if (history.length === 0) alert("No se encontró historial de citas pasadas.");
                                 else {
                                     setAppointments(history);
-                                    alert(`Showing ${history.length} past appointments.`);
+                                    alert(`Mostrando ${history.length} citas pasadas.`);
                                 }
                             }}
                             className="w-full bg-white border border-gray-300 rounded-md py-2 px-4 flex items-center justify-center text-sm font-medium text-gray-700 hover:bg-gray-50"
                         >
-                            View History
+                            Ver Historial
                         </button>
                         <button
                             onClick={async () => {
@@ -388,7 +388,7 @@ const PatientDashboard = () => {
                                 try {
                                     const apptResponse = await api.get(`/appointments/patient/${user.id}`);
                                     setAppointments(apptResponse.data);
-                                    alert("Showing all appointments.");
+                                    alert("Mostrando todas las citas.");
                                 } catch (error) {
                                     console.error("Failed to fetch all appointments", error);
                                 } finally {
@@ -397,13 +397,13 @@ const PatientDashboard = () => {
                             }}
                             className="w-full bg-white border border-gray-300 rounded-md py-2 px-4 flex items-center justify-center text-sm font-medium text-gray-700 hover:bg-gray-50 mt-2"
                         >
-                            View All Appointments
+                            Ver Todas las Citas
                         </button>
                         <button
                             onClick={() => navigate('/profile')}
                             className="w-full bg-white border border-gray-300 rounded-md py-2 px-4 flex items-center justify-center text-sm font-medium text-gray-700 hover:bg-gray-50 mt-2"
                         >
-                            My Profile / Settings
+                            Mi Perfil / Configuración
                         </button>
                     </div>
                 </div>

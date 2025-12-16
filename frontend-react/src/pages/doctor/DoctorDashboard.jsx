@@ -45,7 +45,7 @@ const DoctorDashboard = () => {
 
         // Connect WebSocket
         connectWebSocket((message) => {
-            alert("🔔 New Notification: " + message);
+            alert("🔔 Nueva Notificación: " + message);
             // Optionally refresh data here
             fetchData();
         });
@@ -66,7 +66,7 @@ const DoctorDashboard = () => {
                 <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-center justify-center">
                     <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-md">
                         <div className="flex justify-between items-start mb-4">
-                            <h3 className="text-xl font-bold text-gray-900">Appointment Details</h3>
+                            <h3 className="text-xl font-bold text-gray-900">Detalles de la Cita</h3>
                             <button
                                 onClick={() => setViewModal({ show: false, appointment: null })}
                                 className="text-gray-400 hover:text-gray-500"
@@ -80,24 +80,24 @@ const DoctorDashboard = () => {
 
                         <div className="space-y-4">
                             <div>
-                                <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Patient</h4>
-                                <p className="text-sm font-medium text-gray-900">{viewModal.appointment.patient?.name || 'Unknown'}</p>
+                                <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Paciente</h4>
+                                <p className="text-sm font-medium text-gray-900">{viewModal.appointment.patient?.name || 'Desconocido'}</p>
                                 <p className="text-sm text-gray-500">{viewModal.appointment.patient?.email}</p>
                             </div>
 
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Date</h4>
+                                    <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Fecha</h4>
                                     <p className="text-sm text-gray-900">{new Date(viewModal.appointment.appointmentTime).toLocaleDateString()}</p>
                                 </div>
                                 <div>
-                                    <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Time</h4>
+                                    <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Hora</h4>
                                     <p className="text-sm text-gray-900">{new Date(viewModal.appointment.appointmentTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
                                 </div>
                             </div>
 
                             <div>
-                                <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</h4>
+                                <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Estado</h4>
                                 <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full mt-1 ${viewModal.appointment.status === 'COMPLETED' ? 'bg-green-100 text-green-800' :
                                     viewModal.appointment.status === 'CANCELLED' ? 'bg-red-100 text-red-800' :
                                         'bg-blue-100 text-blue-800'
@@ -107,16 +107,16 @@ const DoctorDashboard = () => {
                             </div>
 
                             <div>
-                                <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Symptoms</h4>
+                                <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Síntomas</h4>
                                 <p className="text-sm text-gray-900 bg-gray-50 p-2 rounded mt-1">
-                                    {viewModal.appointment.symptoms || "No symptoms listed."}
+                                    {viewModal.appointment.symptoms || "Sin síntomas listados."}
                                 </p>
                             </div>
 
                             <div>
-                                <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Notes</h4>
+                                <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Notas</h4>
                                 <p className="text-sm text-gray-900 bg-gray-50 p-2 rounded mt-1">
-                                    {viewModal.appointment.notes || "No notes."}
+                                    {viewModal.appointment.notes || "Sin notas."}
                                 </p>
                             </div>
                         </div>
@@ -126,30 +126,30 @@ const DoctorDashboard = () => {
                                 onClick={() => setViewModal({ show: false, appointment: null })}
                                 className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded"
                             >
-                                Close
+                                Cerrar
                             </button>
                         </div>
                     </div>
                 </div>
             )}
 
-            <h2 className="text-2xl font-bold text-gray-800">Doctor Dashboard</h2>
+            <h2 className="text-2xl font-bold text-gray-800">Panel del Doctor</h2>
 
             {/* Stats Row */}
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-                <StatsCard title="Appointments Today" value={loading ? "..." : stats.appointmentsToday} icon={Calendar} color="#4F46E5" />
-                <StatsCard title="Pending Reviews" value={loading ? "..." : stats.pendingReviews} icon={Star} color="#F59E0B" />
-                <StatsCard title="Avg. Rating" value={loading ? "..." : (stats.avgRating ? stats.avgRating.toFixed(1) : "0.0")} icon={Star} color="#10B981" />
-                <StatsCard title="Hours Logged" value={loading ? "..." : stats.hoursLogged} icon={Clock} color="#6B7280" />
+                <StatsCard title="Citas de Hoy" value={loading ? "..." : stats.appointmentsToday} icon={Calendar} color="#4F46E5" />
+                <StatsCard title="Reseñas Pendientes" value={loading ? "..." : stats.pendingReviews} icon={Star} color="#F59E0B" />
+                <StatsCard title="Calif. Promedio" value={loading ? "..." : (stats.avgRating ? stats.avgRating.toFixed(1) : "0.0")} icon={Star} color="#10B981" />
+                <StatsCard title="Horas Registradas" value={loading ? "..." : stats.hoursLogged} icon={Clock} color="#6B7280" />
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Upcoming Appointments */}
                 <div className="bg-white shadow rounded-lg p-6">
-                    <h3 className="text-lg font-medium text-gray-900 mb-4">All Appointments</h3>
+                    <h3 className="text-lg font-medium text-gray-900 mb-4">Todas las Citas</h3>
                     <div className="space-y-4">
                         {appointments.length === 0 ? (
-                            <p className="text-gray-500 text-sm">No appointments found.</p>
+                            <p className="text-gray-500 text-sm">No se encontraron citas.</p>
                         ) : (
                             appointments.map((apt) => (
                                 <div key={apt.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
@@ -171,7 +171,7 @@ const DoctorDashboard = () => {
                                             onClick={() => handleViewClick(apt)}
                                             className="text-indigo-600 hover:text-indigo-900 text-sm font-medium"
                                         >
-                                            View
+                                            Ver
                                         </button>
                                     </div>
                                 </div>
@@ -182,10 +182,10 @@ const DoctorDashboard = () => {
 
                 {/* Recent Reviews */}
                 <div className="bg-white shadow rounded-lg p-6">
-                    <h3 className="text-lg font-medium text-gray-900 mb-4">Recent Reviews</h3>
+                    <h3 className="text-lg font-medium text-gray-900 mb-4">Reseñas Recientes</h3>
                     <div className="space-y-4">
                         {reviews.length === 0 ? (
-                            <p className="text-gray-500 text-sm">No reviews yet.</p>
+                            <p className="text-gray-500 text-sm">Sin reseñas aún.</p>
                         ) : (
                             reviews.slice(0, 3).map((review) => (
                                 <div key={review.id} className="p-4 bg-green-50 border border-green-100 rounded-lg">

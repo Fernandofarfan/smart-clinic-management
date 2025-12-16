@@ -60,15 +60,16 @@ const MyRecords = () => {
 
         } catch (error) {
             console.error("Upload failed", error);
-            const msg = error.response?.data?.message || error.message || "Unknown error";
-            alert(`Failed to upload document: ${msg}\nStatus: ${error.response?.status}`);
+            console.error("Upload failed", error);
+            const msg = error.response?.data?.message || error.message || "Error desconocido";
+            alert(`Error al subir documento: ${msg}\nStatus: ${error.response?.status}`);
         } finally {
             setUploading(false);
         }
     };
 
     const handleDelete = async (id) => {
-        if (window.confirm('Are you sure you want to delete this document?')) {
+        if (window.confirm('¿Estás seguro de que quieres eliminar este documento?')) {
             // Optimistic update
             setDocuments(prev => prev.filter(d => d.id !== id));
             try {
@@ -96,7 +97,7 @@ const MyRecords = () => {
             window.URL.revokeObjectURL(url);
         } catch (error) {
             console.error("Download failed", error);
-            alert("Failed to download file. It may be missing or you lack permissions.");
+            alert("Error al descargar el archivo. Puede que no exista o no tengas permisos.");
         }
     };
 
@@ -110,7 +111,7 @@ const MyRecords = () => {
             window.open(fileURL, '_blank');
         } catch (error) {
             console.error("View failed", error);
-            alert("Failed to open file.");
+            alert("Error al abrir el archivo.");
         }
     };
 
@@ -118,8 +119,8 @@ const MyRecords = () => {
         <div className="space-y-6">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
-                    <h2 className="text-2xl font-bold text-surface-900">Medical Records</h2>
-                    <p className="text-surface-500">View and manage your health documents</p>
+                    <h2 className="text-2xl font-bold text-surface-900">Historial Médico</h2>
+                    <p className="text-surface-500">Consulta y gestiona tus documentos de salud</p>
                 </div>
 
                 <div className="relative">
@@ -138,7 +139,7 @@ const MyRecords = () => {
                         ) : (
                             <Upload className="w-5 h-5" />
                         )}
-                        <span>{uploading ? 'Uploading...' : 'Upload New'}</span>
+                        <span>{uploading ? 'Subiendo...' : 'Subir Nuevo'}</span>
                     </label>
                 </div>
             </div>
@@ -148,17 +149,17 @@ const MyRecords = () => {
                 <div className="min-w-full divide-y divide-surface-100">
                     {/* Header */}
                     <div className="bg-surface-50 px-6 py-3 flex text-xs font-semibold text-surface-500 uppercase tracking-wider">
-                        <div className="flex-1">Document Name</div>
-                        <div className="w-32">Type</div>
-                        <div className="w-32">Date</div>
-                        <div className="w-24">Size</div>
-                        <div className="w-32 text-right">Actions</div>
+                        <div className="flex-1">Nombre del Documento</div>
+                        <div className="w-32">Tipo</div>
+                        <div className="w-32">Fecha</div>
+                        <div className="w-24">Tamaño</div>
+                        <div className="w-32 text-right">Acciones</div>
                     </div>
 
                     {/* Rows */}
                     {documents.length === 0 ? (
                         <div className="px-6 py-8 text-center text-surface-500 text-sm">
-                            No documents found. Upload one above!
+                            No se encontraron documentos. ¡Sube uno arriba!
                         </div>
                     ) : (
                         documents.map((doc) => (

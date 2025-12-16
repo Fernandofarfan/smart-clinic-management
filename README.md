@@ -1,126 +1,126 @@
-# Smart Clinic Management System - Enterprise Edition (v2.0)
+# Sistema de Gestión de Clínica Inteligente - Edición Empresarial (v2.0)
 
-A production-grade, full-stack clinic management solution built with modern enterprise technologies.
+Una solución de gestión clínica full-stack de grado de producción construida con tecnologías empresariales modernas.
 
-![Version](https://img.shields.io/badge/version-2.0.0-blue)
-![Build](https://img.shields.io/badge/build-passing-brightgreen)
-![Coverage](https://img.shields.io/badge/coverage-85%25-green)
-![License](https://img.shields.io/badge/license-MIT-blue)
+![Versión](https://img.shields.io/badge/version-2.0.0-blue)
+![Compilación](https://img.shields.io/badge/build-passing-brightgreen)
+![Cobertura](https://img.shields.io/badge/coverage-85%25-green)
+![Licencia](https://img.shields.io/badge/license-MIT-blue)
 
-## 🚀 Key Features
+## 🚀 Características Clave
 
-### 🔐 Advanced Security
-- **Role-Based Access Control (RBAC)**: Granular permissions for Admin, Doctor, and Patient roles.
-- **JWT Authentication**: Stateless, secure token-based authentication with custom filters.
-- **Audit Logging**: Comprehensive tracking of all critical system actions (HIPAA compliant ready).
-- **Secure Password Handling**: BCrypt encryption for all credentials.
+### 🔐 Seguridad Avanzada
+- **Control de Acceso Basado en Roles (RBAC)**: Permisos granulares para roles de Administrador, Doctor y Paciente.
+- **Autenticación JWT**: Autenticación segura y sin estado basada en tokens con filtros personalizados.
+- **Registro de Auditoría**: Seguimiento exhaustivo de todas las acciones críticas del sistema (listo para cumplimiento HIPAA).
+- **Manejo Seguro de Contraseñas**: Encriptación BCrypt para todas las credenciales.
 
-### 🏥 Clinical Operations
-- **Doctor Portal**: Dashboard, Appointment Management, Prescription Writer with PDF generation.
-- **Patient Portal**: Online Booking, Medical History, Prescription History, Document Uploads.
-- **Medical Records**: Digital storage of diagnosis, treatment plans, and file attachments.
-- **Allergy & Condition Tracking**: Vital patient health information at a glance.
+### 🏥 Operaciones Clínicas
+- **Portal del Doctor**: Panel de control, Gestión de Citas, Redactor de Recetas con generación de PDF.
+- **Portal del Paciente**: Reserva en línea, Historial Médico, Historial de Recetas, Carga de Documentos.
+- **Registros Médicos**: Almacenamiento digital de diagnósticos, planes de tratamiento y archivos adjuntos.
+- **Seguimiento de Alergias y Condiciones**: Información vital de salud del paciente de un vistazo.
 
-### 💼 Business Features
-- **Payment Processing**: Integrated payment tracking, revenue reporting, and invoice generation.
-- **Review System**: Patient ratings and reviews for doctors with moderation capabilities.
-- **Notification System**: Real-time alerts, email reminders, and in-app notifications.
-- **Analytics Dashboard**: Financial status, performance metrics, and appointment statistics.
+### 💼 Características de Negocio
+- **Procesamiento de Pagos**: Seguimiento integrado de pagos, informes de ingresos y generación de facturas.
+- **Sistema de Reseñas**: Calificaciones y reseñas de pacientes para doctores con capacidades de moderación.
+- **Sistema de Notificaciones**: Alertas en tiempo real, recordatorios por correo electrónico y notificaciones en la aplicación.
+- **Panel de Análisis**: Estado financiero, métricas de rendimiento y estadísticas de citas.
 
-### 🛠 Technical Excellence
-- **API Documentation**: Fully interactive Swagger/OpenAPI 3.0 documentation.
-- **Monitoring**: Prometheus metrics and Actuator health checks.
-- **Performance**: Redis caching for high-load endpoints.
-- **Global Error Handling**: Standardized error responses across the entire API.
+### 🛠 Excelencia Técnica
+- **Documentación de API**: Documentación Swagger/OpenAPI 3.0 totalmente interactiva.
+- **Monitoreo**: Métricas de Prometheus y comprobaciones de salud de Actuator.
+- **Rendimiento**: Caché de Redis para endpoints de alta carga.
+- **Manejo Global de Errores**: Respuestas de error estandarizadas en toda la API.
 
-## 🏗 Architecture
+## 🏗 Arquitectura
 
 ```
 smart-clinic-management/
-├── backend/                    # Spring Boot 3 Enterprise App
+├── backend/                    # Aplicación Empresarial Spring Boot 3
 │   ├── src/main/java/com/smartclinic/
-│   │   ├── config/            # Security, Swagger, CORS configs
-│   │   ├── security/          # JWT Filters, Auth logic
-│   │   ├── entity/            # JPA Entities (Rich Domain Model)
-│   │   ├── repository/        # Data Access Layer
-│   │   ├── service/           # Business Logic Layer
-│   │   ├── controller/        # REST API Controllers
-│   │   ├── dto/               # Data Transfer Objects
-│   │   └── exception/         # Global Exception Handling
-│   └── src/main/resources/    # Configs, SQL Migrations
-├── frontend/                   # Modern Web Portal (Migrating to React)
-├── database/                   # Database Scripts
-│   ├── schema.sql             # Base Schema
-│   └── migration_v2.sql       # V2 Enterprise Migrations
-└── docker-compose.yml          # Container Orchestration
+│   │   ├── config/            # Configuraciones de Seguridad, Swagger, CORS
+│   │   ├── security/          # Filtros JWT, Lógica de Autenticación
+│   │   ├── entity/            # Entidades JPA (Modelo de Dominio Rico)
+│   │   ├── repository/        # Capa de Acceso a Datos
+│   │   ├── service/           # Capa de Lógica de Negocio
+│   │   ├── controller/        # Controladores API REST
+│   │   ├── dto/               # Objetos de Transferencia de Datos
+│   │   └── exception/         # Manejo Global de Excepciones
+│   └── src/main/resources/    # Configuraciones, Migraciones SQL
+├── frontend/                   # Portal Web Moderno (Migrando a React)
+├── database/                   # Scripts de Base de Datos
+│   ├── schema.sql             # Esquema Base
+│   └── migration_v2.sql       # Migraciones Empresariales V2
+└── docker-compose.yml          # Orquestación de Contenedores
 ```
 
-## 📋 Prerequisites
+## 📋 Prerrequisitos
 
 - Java 17 LTS
 - Maven 3.9+
 - MySQL 8.0+
-- Redis (Optional, for caching)
-- SMTP Server (Optional, for emails - defaults to Mailtrap)
+- Redis (Opcional, para caché)
+- Servidor SMTP (Opcional, para correos - por defecto usa Mailtrap)
 
-## 🛠 Setup & Installation
+## 🛠 Configuración e Instalación
 
-### 1. Database Setup
+### 1. Configuración de Base de Datos
 ```bash
-# Create database and apply migrations
+# Crear base de datos y aplicar migraciones
 mysql -u root -p < database/schema.sql
 mysql -u root -p < database/migration_v2.sql
 ```
 
-### 2. Backend Configuration
-Edit `backend/src/main/resources/application.properties` to match your environment:
+### 2. Configuración del Backend
+Edita `backend/src/main/resources/application.properties` para que coincida con tu entorno:
 ```properties
-spring.datasource.password=your_password
-jwt.secret=your_secure_secret_key
-spring.mail.username=your_mail_user
+spring.datasource.password=tu_contraseña
+jwt.secret=tu_clave_secreta_segura
+spring.mail.username=tu_usuario_correo
 ```
 
-### 3. Build and Run
+### 3. Construir y Ejecutar
 ```bash
 cd backend
 mvn clean install
 mvn spring-boot:run
 ```
-Access the API Documentation at: http://localhost:8080/swagger-ui.html
+Accede a la Documentación de la API en: http://localhost:8080/swagger-ui.html
 
-## 🔌 API Endpoints (V2)
+## 🔌 Endpoints de API (V2)
 
-The system exposes a comprehensive RESETful API. See Swagger UI for full details.
+El sistema expone una API RESTful completa. Ver Swagger UI para detalles completos.
 
-| Module | Base Path | Description |
+| Módulo | Ruta Base | Descripción |
 |--------|-----------|-------------|
-| **Auth** | `/api/auth` | Login, Register, Refresh Token |
-| **Doctors** | `/api/doctors` | Profiles, Availability, search |
-| **Patients** | `/api/patients` | Profiles, Medical History |
-| **Appointments** | `/api/appointments` | Scheduling, Rescheduling |
-| **Prescriptions** | `/api/prescriptions` | Digital Rx generation |
-| **Notifications** | `/api/notifications` | User alerts system |
-| **Payments** | `/api/payments` | Billing and invoices |
-| **Reviews** | `/api/reviews` | Doctor ratings system |
+| **Auth** | `/api/auth` | Login, Registro, Refrescar Token |
+| **Doctores** | `/api/doctors` | Perfiles, Disponibilidad, búsqueda |
+| **Pacientes** | `/api/patients` | Perfiles, Historial Médico |
+| **Citas** | `/api/appointments` | Programación, Reprogramación |
+| **Recetas** | `/api/prescriptions` | Generación de Rx Digital |
+| **Notificaciones** | `/api/notifications` | Sistema de alertas de usuario |
+| **Pagos** | `/api/payments` | Facturación y recibos |
+| **Reseñas** | `/api/reviews` | Sistema de calificación de doctores |
 
-## 🧪 Testing
+## 🧪 Pruebas
 
-The project maintains high code quality standards.
+El proyecto mantiene altos estándares de calidad de código.
 
 ```bash
-# Run Unit and Integration Tests
+# Ejecutar Pruebas Unitarias y de Integración
 mvn test
 
-# Generate Coverage Report
+# Generar Informe de Cobertura
 mvn jacoco:report
 ```
 
-## 📦 Deployment (Docker)
+## 📦 Despliegue (Docker)
 
 ```bash
 docker-compose up --build -d
 ```
 
-## 📄 License
+## 📄 Licencia
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+Este proyecto está licenciado bajo la Licencia MIT - ver el archivo LICENSE para más detalles.

@@ -36,7 +36,7 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST.value(),
-                "Validation Failed",
+                "Validación Fallida",
                 errors.toString(),
                 request.getDescription(false)
         );
@@ -53,7 +53,7 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.NOT_FOUND.value(),
-                "Resource Not Found",
+                "Recurso No Encontrado",
                 ex.getMessage(),
                 request.getDescription(false)
         );
@@ -70,8 +70,8 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.UNAUTHORIZED.value(),
-                "Authentication Failed",
-                "Invalid username or password",
+                "Autenticación Fallida",
+                "Usuario o contraseña inválidos",
                 request.getDescription(false)
         );
         
@@ -87,8 +87,8 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.FORBIDDEN.value(),
-                "Access Denied",
-                "You don't have permission to access this resource",
+                "Acceso Denegado",
+                "No tienes permiso para acceder a este recurso",
                 request.getDescription(false)
         );
         
@@ -104,7 +104,7 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                "Internal Server Error",
+                "Error Interno del Servidor",
                 ex.getMessage(),
                 request.getDescription(false)
         );

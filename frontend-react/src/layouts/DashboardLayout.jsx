@@ -35,29 +35,29 @@ const DashboardLayout = ({ children, role }) => {
 
     const getMenuItems = () => {
         const common = [
-            { icon: LayoutDashboard, label: 'Overview', path: '/dashboard' },
+            { icon: LayoutDashboard, label: 'Resumen', path: '/dashboard' },
         ];
 
         if (role === 'patient') {
             return [
                 ...common,
-                { icon: Calendar, label: 'Book Appointment', path: '/book-appointment' },
-                { icon: FileText, label: 'My Records', path: '/records' }, // Placeholder
-                { icon: User, label: 'Profile', path: '/profile' },
+                { icon: Calendar, label: 'Reservar Cita', path: '/book-appointment' },
+                { icon: FileText, label: 'Mis Registros', path: '/records' }, // Placeholder
+                { icon: User, label: 'Perfil', path: '/profile' },
             ];
         }
         if (role === 'doctor') {
             return [
                 ...common,
-                { icon: Calendar, label: 'Schedule', path: '/schedule' },
-                { icon: User, label: 'Patients', path: '/patients' },
+                { icon: Calendar, label: 'Agenda', path: '/schedule' },
+                { icon: User, label: 'Pacientes', path: '/patients' },
             ];
         }
         if (role === 'admin') {
             return [
                 ...common,
-                { icon: Activity, label: 'Audit Logs', path: '/admin/audit-logs' },
-                { icon: CreditCard, label: 'Payments', path: '/admin/payments' },
+                { icon: Activity, label: 'Auditoría', path: '/admin/audit-logs' },
+                { icon: CreditCard, label: 'Pagos', path: '/admin/payments' },
             ];
         }
         return common;
@@ -66,6 +66,12 @@ const DashboardLayout = ({ children, role }) => {
     const handleNavigation = (path) => {
         navigate(path);
         setIsMobileMenuOpen(false);
+    };
+
+    const roleLabels = {
+        patient: 'Paciente',
+        doctor: 'Doctor',
+        admin: 'Administrador'
     };
 
     return (
@@ -100,7 +106,7 @@ const DashboardLayout = ({ children, role }) => {
                         </div>
                         <div className="flex-1 min-w-0">
                             <p className="text-sm font-medium text-surface-900 truncate">{user?.name || user?.email}</p>
-                            <p className="text-xs text-surface-500 capitalize">{role}</p>
+                            <p className="text-xs text-surface-500 capitalize">{roleLabels[role] || role}</p>
                         </div>
                     </div>
                     <button
@@ -108,7 +114,7 @@ const DashboardLayout = ({ children, role }) => {
                         className="w-full flex items-center justify-center space-x-2 px-4 py-2 border border-surface-200 rounded-lg text-sm font-medium text-surface-600 hover:bg-red-50 hover:text-red-600 hover:border-red-100 transition-colors"
                     >
                         <LogOut className="w-4 h-4" />
-                        <span>Sign Out</span>
+                        <span>Cerrar Sesión</span>
                     </button>
                 </div>
             </aside>

@@ -41,21 +41,21 @@ export default function Login() {
                         </div>
                         <h1 className="text-5xl font-bold mb-4 font-sans tracking-tight">Smart Clinic</h1>
                         <p className="text-xl text-primary-100 max-w-md">
-                            Next-generation healthcare management for modern professionals.
+                            Gestión clínica de próxima generación para profesionales modernos.
                         </p>
                     </div>
                     <div className="flex gap-4 text-sm text-primary-200 font-medium">
                         <div className="flex items-center gap-2">
                             <div className="w-1 h-1 bg-secondary-400 rounded-full"></div>
-                            Secure
+                            Seguro
                         </div>
                         <div className="flex items-center gap-2">
                             <div className="w-1 h-1 bg-secondary-400 rounded-full"></div>
-                            Fast
+                            Rápido
                         </div>
                         <div className="flex items-center gap-2">
                             <div className="w-1 h-1 bg-secondary-400 rounded-full"></div>
-                            Reliable
+                            Confiable
                         </div>
                     </div>
                 </div>
@@ -70,8 +70,8 @@ export default function Login() {
 
                 <div className="w-full max-w-md space-y-8 z-10">
                     <div className="text-center lg:text-left">
-                        <h2 className="text-3xl font-bold text-surface-900 tracking-tight">Welcome Back</h2>
-                        <p className="mt-2 text-sm text-surface-500">Sign in to access your dashboard</p>
+                        <h2 className="text-3xl font-bold text-surface-900 tracking-tight">Bienvenido</h2>
+                        <p className="mt-2 text-sm text-surface-500">Inicia sesión para acceder a tu panel</p>
                     </div>
 
                     <div className="bg-white/80 backdrop-blur-xl shadow-card rounded-2xl p-8 border border-white/50">
@@ -79,19 +79,23 @@ export default function Login() {
 
                             {/* Role Selection Tabs */}
                             <div>
-                                <label className="block text-xs font-semibold text-surface-400 uppercase tracking-wider mb-3">Select Portal</label>
+                                <label className="block text-xs font-semibold text-surface-400 uppercase tracking-wider mb-3">Seleccionar Portal</label>
                                 <div className="flex p-1 bg-surface-100 rounded-xl">
-                                    {['patient', 'doctor', 'admin'].map((r) => (
+                                    {[
+                                        { id: 'patient', label: 'Paciente' },
+                                        { id: 'doctor', label: 'Doctor' },
+                                        { id: 'admin', label: 'Admin' }
+                                    ].map((r) => (
                                         <button
-                                            key={r}
+                                            key={r.id}
                                             type="button"
-                                            onClick={() => setRole(r)}
+                                            onClick={() => setRole(r.id)}
                                             className={`flex-1 px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 capitalize
-                                                ${role === r
+                                                ${role === r.id
                                                     ? 'bg-white text-primary-600 shadow-sm ring-1 ring-black/5'
                                                     : 'text-surface-500 hover:text-surface-700 hover:bg-surface-200/50'}`}
                                         >
-                                            {r}
+                                            {r.label}
                                         </button>
                                     ))}
                                 </div>
@@ -99,7 +103,7 @@ export default function Login() {
 
                             {/* Email */}
                             <div className="space-y-1">
-                                <label htmlFor="email" className="block text-sm font-medium text-surface-700">Email</label>
+                                <label htmlFor="email" className="block text-sm font-medium text-surface-700">Correo Electrónico</label>
                                 <div className="relative group">
                                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none transition-colors duration-200 group-focus-within:text-primary-500">
                                         <Mail className="h-5 w-5 text-surface-400" />
@@ -111,14 +115,14 @@ export default function Login() {
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                         className="block w-full pl-10 pr-3 py-2.5 border border-surface-200 rounded-xl leading-5 bg-surface-50 placeholder-surface-400 focus:outline-none focus:bg-white focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all duration-200 sm:text-sm"
-                                        placeholder="name@smartclinic.com"
+                                        placeholder="nombre@smartclinic.com"
                                     />
                                 </div>
                             </div>
 
                             {/* Password */}
                             <div className="space-y-1">
-                                <label htmlFor="password" className="block text-sm font-medium text-surface-700">Password</label>
+                                <label htmlFor="password" className="block text-sm font-medium text-surface-700">Contraseña</label>
                                 <div className="relative group">
                                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none transition-colors duration-200 group-focus-within:text-primary-500">
                                         <Lock className="h-5 w-5 text-surface-400" />
@@ -151,13 +155,13 @@ export default function Login() {
                                 type="submit"
                                 className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-lg text-sm font-semibold text-white bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transform transition-all duration-200 hover:-translate-y-0.5 hover:shadow-glow"
                             >
-                                Sign In
+                                Ingresar
                             </button>
                         </form>
                     </div>
 
                     <div className="text-center text-xs text-surface-400">
-                        &copy; 2024 Smart Clinic Management. Secure System.
+                        &copy; 2024 Gestión Smart Clinic. Sistema Seguro.
                     </div>
                 </div>
             </div>

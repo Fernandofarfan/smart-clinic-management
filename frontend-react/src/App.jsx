@@ -159,13 +159,19 @@ function App() {
 
           <Route path="/unauthorized" element={
             <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Unauthorized Access</h2>
-              <p className="text-gray-600 mb-4">You do not have permission to view this page.</p>
-              <a href="/dashboard" className="text-indigo-600 hover:text-indigo-500">Return to Dashboard</a>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">Acceso No Autorizado</h2>
+              <p className="text-gray-600 mb-4">No tienes permiso para ver esta página.</p>
+              <a href="/dashboard" className="text-indigo-600 hover:text-indigo-500">Volver al Panel</a>
             </div>
           } />
 
-          <Route path="*" element={<div>404 Not Found</div>} />
+          <Route path="*" element={
+            <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">404 No Encontrado</h2>
+              <p className="text-gray-600 mb-4">La página que buscas no existe.</p>
+              <a href="/dashboard" className="text-indigo-600 hover:text-indigo-500">Volver al Panel</a>
+            </div>
+          } />
         </Routes>
       </Router>
     </AuthProvider>

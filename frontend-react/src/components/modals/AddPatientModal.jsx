@@ -36,7 +36,7 @@ const AddPatientModal = ({ isOpen, onClose, onPatientAdded }) => {
             });
         } catch (err) {
             console.error("Failed to add patient", err);
-            setError(err.response?.data?.message || 'Failed to add patient.');
+            setError(err.response?.data?.message || 'Error al agregar paciente.');
         } finally {
             setLoading(false);
         }
@@ -49,7 +49,7 @@ const AddPatientModal = ({ isOpen, onClose, onPatientAdded }) => {
             <div className="bg-white rounded-2xl w-full max-w-lg shadow-xl transform transition-all">
                 {/* Header */}
                 <div className="px-6 py-4 border-b border-surface-100 flex justify-between items-center">
-                    <h3 className="text-xl font-bold text-surface-900">Add New Patient</h3>
+                    <h3 className="text-xl font-bold text-surface-900">Agregar Nuevo Paciente</h3>
                     <button onClick={onClose} className="p-2 hover:bg-surface-100 rounded-full text-surface-500 transition-colors">
                         <X className="w-5 h-5" />
                     </button>
@@ -65,7 +65,7 @@ const AddPatientModal = ({ isOpen, onClose, onPatientAdded }) => {
 
                     <div className="space-y-4">
                         <div>
-                            <label className="block text-sm font-medium text-surface-700 mb-1">Full Name</label>
+                            <label className="block text-sm font-medium text-surface-700 mb-1">Nombre Completo</label>
                             <div className="relative">
                                 <User className="absolute left-3 top-1/2 -translate-y-1/2 text-surface-400 w-5 h-5" />
                                 <input
@@ -81,7 +81,7 @@ const AddPatientModal = ({ isOpen, onClose, onPatientAdded }) => {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-surface-700 mb-1">Email</label>
+                            <label className="block text-sm font-medium text-surface-700 mb-1">Correo Electrónico</label>
                             <div className="relative">
                                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-surface-400 w-5 h-5" />
                                 <input
@@ -97,7 +97,7 @@ const AddPatientModal = ({ isOpen, onClose, onPatientAdded }) => {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-surface-700 mb-1">Phone Number</label>
+                            <label className="block text-sm font-medium text-surface-700 mb-1">Número de Teléfono</label>
                             <div className="relative">
                                 <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-surface-400 w-5 h-5" />
                                 <input
@@ -113,7 +113,7 @@ const AddPatientModal = ({ isOpen, onClose, onPatientAdded }) => {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-surface-700 mb-1">Initial Password</label>
+                            <label className="block text-sm font-medium text-surface-700 mb-1">Contraseña Inicial</label>
                             <div className="relative">
                                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-surface-400 w-5 h-5" />
                                 <input
@@ -123,7 +123,7 @@ const AddPatientModal = ({ isOpen, onClose, onPatientAdded }) => {
                                     value={formData.password}
                                     onChange={handleChange}
                                     className="w-full pl-10 pr-4 py-2 border border-surface-200 rounded-xl focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none"
-                                    placeholder="Create a strong password"
+                                    placeholder="Crea una contraseña segura"
                                 />
                             </div>
                         </div>
@@ -135,14 +135,14 @@ const AddPatientModal = ({ isOpen, onClose, onPatientAdded }) => {
                             onClick={onClose}
                             className="px-4 py-2 border border-surface-200 text-surface-600 rounded-xl hover:bg-surface-50 transition-colors"
                         >
-                            Cancel
+                            Cancelar
                         </button>
                         <button
                             type="submit"
                             disabled={loading}
                             className="px-4 py-2 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors shadow-lg disabled:opacity-50"
                         >
-                            {loading ? 'Creating...' : 'Create Patient'}
+                            {loading ? 'Creando...' : 'Crear Paciente'}
                         </button>
                     </div>
                 </form>

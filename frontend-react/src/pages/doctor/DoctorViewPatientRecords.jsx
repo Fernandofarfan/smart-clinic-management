@@ -55,7 +55,7 @@ const DoctorViewPatientRecords = () => {
             window.URL.revokeObjectURL(url);
         } catch (error) {
             console.error("Download failed", error);
-            alert("Failed to download file.");
+            alert("Error al descargar archivo.");
         }
     };
 
@@ -69,7 +69,7 @@ const DoctorViewPatientRecords = () => {
             window.open(fileURL, '_blank');
         } catch (error) {
             console.error("View failed", error);
-            alert("Failed to open file.");
+            alert("Error al abrir archivo.");
         }
     };
 
@@ -80,28 +80,28 @@ const DoctorViewPatientRecords = () => {
                 className="flex items-center text-surface-500 hover:text-primary-600 transition-colors"
             >
                 <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Patients
+                Volver a Pacientes
             </button>
 
             <div className="flex justify-between items-center">
                 <div>
-                    <h2 className="text-2xl font-bold text-surface-900">Medical Records</h2>
-                    <p className="text-surface-500">Documents for {patientName}</p>
+                    <h2 className="text-2xl font-bold text-surface-900">Historial Médico</h2>
+                    <p className="text-surface-500">Documentos de {patientName}</p>
                 </div>
             </div>
 
             <div className="bg-white rounded-2xl shadow-sm border border-surface-200 overflow-hidden">
                 <div className="min-w-full divide-y divide-surface-100">
                     <div className="bg-surface-50 px-6 py-3 flex text-xs font-semibold text-surface-500 uppercase tracking-wider">
-                        <div className="flex-1">Document Name</div>
-                        <div className="w-32">Type</div>
-                        <div className="w-32">Date</div>
-                        <div className="w-32 text-right">Actions</div>
+                        <div className="flex-1">Nombre del Documento</div>
+                        <div className="w-32">Tipo</div>
+                        <div className="w-32">Fecha</div>
+                        <div className="w-32 text-right">Acciones</div>
                     </div>
 
                     {documents.length === 0 ? (
                         <div className="px-6 py-8 text-center text-surface-500 text-sm">
-                            No documents found for this patient.
+                            No se encontraron documentos para este paciente.
                         </div>
                     ) : (
                         documents.map((doc) => (
@@ -118,14 +118,14 @@ const DoctorViewPatientRecords = () => {
                                     <button
                                         onClick={() => handleDownload(doc.fileName, doc.name)}
                                         className="p-2 text-surface-400 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-colors"
-                                        title="Download"
+                                        title="Descargar"
                                     >
                                         <Download className="w-4 h-4" />
                                     </button>
                                     <button
                                         onClick={() => handleView(doc.fileName)}
                                         className="p-2 text-surface-400 hover:text-secondary-600 hover:bg-secondary-50 rounded-lg transition-colors"
-                                        title="View"
+                                        title="Ver"
                                     >
                                         <Eye className="w-4 h-4" />
                                     </button>
