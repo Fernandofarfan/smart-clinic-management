@@ -31,6 +31,12 @@ class AppointmentServiceTest {
     @Mock
     private PatientRepository patientRepository;
 
+    @Mock
+    private MockEmailService emailService;
+
+    @Mock
+    private NotificationService notificationService;
+
     @InjectMocks
     private AppointmentService appointmentService;
 
@@ -45,7 +51,8 @@ class AppointmentServiceTest {
         AppointmentDTO dto = new AppointmentDTO();
         dto.setDoctorId(1L);
         dto.setPatientId(1L);
-        dto.setAppointmentTime(LocalDateTime.now().plusDays(1));
+        // Set a fixed time: 2025-12-17 10:00 (Wednesday) to ensure it's within working hours
+        dto.setAppointmentTime(LocalDateTime.of(2025, 12, 17, 10, 0));
         
         Doctor doctor = new Doctor();
         doctor.setId(1L);
@@ -75,6 +82,10 @@ class AppointmentServiceTest {
         Appointment appointment = new Appointment();
         appointment.setId(appointmentId);
         appointment.setStatus("SCHEDULED");
+        
+        Patient patient = new Patient();
+        patient.setEmail("test@example.com");
+        appointment.setPatient(patient);
         
         when(appointmentRepository.findById(appointmentId)).thenReturn(Optional.of(appointment));
         when(appointmentRepository.save(any(Appointment.class))).thenAnswer(i -> i.getArguments()[0]);
