@@ -3,6 +3,16 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import BookAppointment from './pages/patient/BookAppointment';
+import Profile from './pages/patient/Profile';
+import AuditLogs from './pages/admin/AuditLogs';
+import Payments from './pages/admin/Payments';
+
+import DashboardLayout from './layouts/DashboardLayout';
+import MyRecords from './pages/patient/MyRecords';
+import DoctorSchedule from './pages/doctor/DoctorSchedule';
+import DoctorPatients from './pages/doctor/DoctorPatients';
+import DoctorViewPatientRecords from './pages/doctor/DoctorViewPatientRecords';
+import DoctorViewPatientProfile from './pages/doctor/DoctorViewPatientProfile';
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const { user } = useAuth();
@@ -16,6 +26,16 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   }
 
   return children;
+};
+
+// Helper to wrap pages in the layout automatically injecting role
+const DashboardLayoutWrapper = ({ children }) => {
+  const { user } = useAuth();
+  return (
+    <DashboardLayout role={user?.role}>
+      {children}
+    </DashboardLayout>
+  );
 };
 
 function App() {
@@ -38,6 +58,105 @@ function App() {
             }
           />
 
+          {/* Patient Routes */}
+          <Route
+            path="/book-appointment"
+            element={
+              <ProtectedRoute allowedRoles={['patient']}>
+                <DashboardLayoutWrapper>
+                  <BookAppointment />
+                </DashboardLayoutWrapper>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/records"
+            element={
+              <ProtectedRoute allowedRoles={['patient']}>
+                <DashboardLayoutWrapper>
+                  <MyRecords />
+                </DashboardLayoutWrapper>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute allowedRoles={['patient']}>
+                <DashboardLayoutWrapper>
+                  <Profile />
+                </DashboardLayoutWrapper>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Doctor Routes */}
+          <Route
+            path="/schedule"
+            element={
+              <ProtectedRoute allowedRoles={['doctor']}>
+                <DashboardLayoutWrapper>
+                  <DoctorSchedule />
+                </DashboardLayoutWrapper>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/patients"
+            element={
+              <ProtectedRoute allowedRoles={['doctor']}>
+                <DashboardLayoutWrapper>
+                  <DoctorPatients />
+                </DashboardLayoutWrapper>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/doctor/patients/:patientId/records"
+            element={
+              <ProtectedRoute allowedRoles={['doctor']}>
+                <DashboardLayoutWrapper>
+                  <DoctorViewPatientRecords />
+                </DashboardLayoutWrapper>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/doctor/patients/:patientId/profile"
+            element={
+              <ProtectedRoute allowedRoles={['doctor']}>
+                <DashboardLayoutWrapper>
+                  <DoctorViewPatientProfile />
+                </DashboardLayoutWrapper>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Admin Routes */}
+          <Route
+            path="/admin/audit-logs"
+            element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <DashboardLayoutWrapper>
+                  <AuditLogs />
+                </DashboardLayoutWrapper>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/payments"
+            element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <DashboardLayoutWrapper>
+                  <Payments />
+                </DashboardLayoutWrapper>
+              </ProtectedRoute>
+            }
+          />
+
+
           <Route path="/unauthorized" element={
             <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
               <h2 className="text-2xl font-bold text-gray-900 mb-2">Unauthorized Access</h2>
@@ -46,18 +165,8 @@ function App() {
             </div>
           } />
 
-          <Route
-            path="/book-appointment"
-            element={
-              <ProtectedRoute allowedRoles={['patient']}>
-                <BookAppointment />
-              </ProtectedRoute>
-            }
-          />
-
           <Route path="*" element={<div>404 Not Found</div>} />
         </Routes>
-
       </Router>
     </AuthProvider>
   );

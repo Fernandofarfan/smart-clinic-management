@@ -76,6 +76,10 @@ public class SecurityConfig {
                         // Payment endpoints
                         .requestMatchers("/api/payments/**").authenticated()
                         
+                        // Document endpoints
+                        .requestMatchers("/api/documents/**").authenticated()
+
+                        
                         // All other requests require authentication
                         .anyRequest().authenticated()
                 )
@@ -93,6 +97,7 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(List.of(
                 "http://localhost:3000",
                 "http://localhost:5173",
+                "http://localhost:3001",
                 "http://localhost:8080",
                 "https://smartclinic.com"
         ));

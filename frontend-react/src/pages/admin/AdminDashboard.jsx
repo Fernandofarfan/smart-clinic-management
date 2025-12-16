@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import StatsCard from '../../components/StatsCard';
+import AddDoctorModal from '../../components/AddDoctorModal';
 import { Users, UserPlus, DollarSign, Activity } from 'lucide-react';
 import api from '../../services/api';
 
 const AdminDashboard = () => {
+    const navigate = useNavigate();
+    const [showAddDoctor, setShowAddDoctor] = useState(false);
     const [stats, setStats] = useState({
         totalDoctors: 0,
         totalPatients: 0,
@@ -27,8 +31,16 @@ const AdminDashboard = () => {
         fetchStats();
     }, []);
 
+
+
     const handleAction = (action) => {
-        alert(`Action triggered: ${action} (Feature coming soon!)`);
+        if (action === 'Add New Doctor') {
+            setShowAddDoctor(true);
+        } else if (action === 'View Audit Logs') {
+            navigate('/admin/audit-logs');
+        } else if (action === 'Manage Payments') {
+            navigate('/admin/payments');
+        }
     };
 
     return (
@@ -70,7 +82,20 @@ const AdminDashboard = () => {
                     </button>
                 </div>
             </div>
-        </div>
+
+
+            {
+                showAddDoctor && (
+                    <AddDoctorModal
+                        onClose={() => setShowAddDoctor(false)}
+                        onDoctorAdded={() => {
+                            // Refresh stats if needed
+                            window.location.reload();
+                        }}
+                    />
+                )
+            }
+        </div >
     );
 };
 

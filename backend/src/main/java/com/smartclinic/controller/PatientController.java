@@ -53,4 +53,14 @@ public class PatientController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Patient> updatePatient(@PathVariable Long id, @RequestBody Patient patientDetails) {
+        try {
+            Patient updatedPatient = patientService.updatePatient(id, patientDetails);
+            return ResponseEntity.ok(updatedPatient);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

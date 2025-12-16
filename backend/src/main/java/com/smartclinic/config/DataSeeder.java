@@ -53,72 +53,74 @@ public class DataSeeder implements CommandLineRunner {
     }
 
     private void seedAdmin() {
-        if (adminRepository.findByEmail("admin@smartclinic.com").isEmpty()) {
-            logger.info("Seeding Admin user...");
-            Admin admin = new Admin();
+        logger.info("Seeding/Updating Admin user...");
+        Admin admin = adminRepository.findByEmail("admin@smartclinic.com").orElse(new Admin());
+        if (admin.getId() == null) {
             admin.setUsername("admin");
             admin.setEmail("admin@smartclinic.com");
-            admin.setPassword(passwordEncoder.encode("admin"));
-            admin.setRole("ADMIN");
-            admin.setIsActive(true);
-            adminRepository.save(admin);
-            logger.info("Admin created.");
         }
+        // Always update password and active status
+        admin.setPassword(passwordEncoder.encode("admin"));
+        admin.setRole("ADMIN");
+        admin.setIsActive(true);
+        adminRepository.save(admin);
+        logger.info("Admin updated.");
     }
 
     private void seedDoctors() {
-        if (doctorRepository.count() == 0) {
-            logger.info("Seeding Doctors...");
-            
-            Doctor d1 = new Doctor();
-            d1.setName("Dr. John Smith");
-            d1.setEmail("john.smith@smartclinic.com");
-            d1.setPassword(passwordEncoder.encode("admin"));
-            d1.setSpecialty("Cardiology");
-            d1.setPhone("555-0101");
-            d1.setConsultationFee(150.00);
-            d1.setBio("Expert in heart diseases with 15 years experience.");
-            d1.setYearsOfExperience(15);
-            d1.setIsActive(true);
-            
-            Doctor d2 = new Doctor();
-            d2.setName("Dr. Sarah Johnson");
-            d2.setEmail("sarah.johnson@smartclinic.com");
-            d2.setPassword(passwordEncoder.encode("admin"));
-            d2.setSpecialty("Pediatrics");
-            d2.setPhone("555-0102");
-            d2.setConsultationFee(120.00);
-            d2.setBio("Dedicated pediatrician loving children care.");
-            d2.setYearsOfExperience(10);
-            d2.setIsActive(true);
+        logger.info("Seeding/Updating Doctors...");
 
-            doctorRepository.saveAll(Arrays.asList(d1, d2));
-            logger.info("Doctors created.");
-        }
+        // Dr. 1
+        Doctor d1 = doctorRepository.findByEmail("john.smith@smartclinic.com").orElse(new Doctor());
+        d1.setName("Dr. John Smith");
+        d1.setEmail("john.smith@smartclinic.com");
+        d1.setPassword(passwordEncoder.encode("admin"));
+        d1.setSpecialty("Cardiology");
+        d1.setPhone("555-0101");
+        d1.setConsultationFee(150.00);
+        d1.setBio("Expert in heart diseases with 15 years experience.");
+        d1.setYearsOfExperience(15);
+        d1.setIsActive(true);
+        doctorRepository.save(d1);
+        
+        // Dr. 2
+        Doctor d2 = doctorRepository.findByEmail("sarah.johnson@smartclinic.com").orElse(new Doctor());
+        d2.setName("Dr. Sarah Johnson");
+        d2.setEmail("sarah.johnson@smartclinic.com");
+        d2.setPassword(passwordEncoder.encode("admin"));
+        d2.setSpecialty("Pediatrics");
+        d2.setPhone("555-0102");
+        d2.setConsultationFee(120.00);
+        d2.setBio("Dedicated pediatrician loving children care.");
+        d2.setYearsOfExperience(10);
+        d2.setIsActive(true);
+        doctorRepository.save(d2);
+
+        logger.info("Doctors updated.");
     }
 
     private void seedPatients() {
-        if (patientRepository.count() == 0) {
-            logger.info("Seeding Patients...");
-            
-            Patient p1 = new Patient();
-            p1.setName("Alice Brown");
-            p1.setEmail("alice.brown@email.com");
-            p1.setPassword(passwordEncoder.encode("admin"));
-            p1.setPhone("555-1001");
-            p1.setIsActive(true);
-            // p1.setDateOfBirth, Gender etc if needed
-            
-            Patient p2 = new Patient();
-            p2.setName("Bob Martinez");
-            p2.setEmail("bob.martinez@email.com");
-            p2.setPassword(passwordEncoder.encode("admin"));
-            p2.setPhone("555-1002");
-            p2.setIsActive(true);
+        logger.info("Seeding/Updating Patients...");
 
-            patientRepository.saveAll(Arrays.asList(p1, p2));
-            logger.info("Patients created.");
-        }
+        // Patient 1
+        Patient p1 = patientRepository.findByEmail("alice.brown@email.com").orElse(new Patient());
+        p1.setName("Alice Brown");
+        p1.setEmail("alice.brown@email.com");
+        p1.setPassword(passwordEncoder.encode("admin"));
+        p1.setPhone("555-1001");
+        p1.setIsActive(true);
+        patientRepository.save(p1);
+        
+        // Patient 2
+        Patient p2 = patientRepository.findByEmail("bob.martinez@email.com").orElse(new Patient());
+        p2.setName("Bob Martinez");
+        p2.setEmail("bob.martinez@email.com");
+        p2.setPassword(passwordEncoder.encode("admin"));
+        p2.setPhone("555-1002");
+        p2.setIsActive(true);
+        patientRepository.save(p2);
+
+        logger.info("Patients updated.");
     }
 
     private void seedAppointmentsAndRelatedData() {

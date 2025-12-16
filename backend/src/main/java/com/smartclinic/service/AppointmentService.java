@@ -7,6 +7,8 @@ import com.smartclinic.entity.Patient;
 import com.smartclinic.repository.AppointmentRepository;
 import com.smartclinic.repository.DoctorRepository;
 import com.smartclinic.repository.PatientRepository;
+import com.smartclinic.service.MockEmailService;
+import com.smartclinic.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,12 @@ public class AppointmentService {
     @Autowired
     private PatientRepository patientRepository;
 
+    @Autowired
+    private MockEmailService emailService;
+
+    @Autowired
+    private NotificationService notificationService;
+
     /**
      * Book a new appointment
      * Satisfies Q6 requirement for bookAppointment method that saves appointment (3 points)
@@ -39,6 +47,11 @@ public class AppointmentService {
      * @return Saved appointment entity
      */
     public Appointment bookAppointment(AppointmentDTO dto) {
+        // Validate Availability
+        if (!isDoctorAvailable(dto.getDoctorId(), dto.getAppointmentTime())) {
+            throw new RuntimeException("Doctor is not available at this time (Working hours: Mon-Fri 09:00-17:00) or slot is taken.");
+        }
+
         Optional<Doctor> doctor = doctorRepository.findById(dto.getDoctorId());
         Optional<Patient> patient = patientRepository.findById(dto.getPatientId());
         
@@ -55,7 +68,53 @@ public class AppointmentService {
         appointment.setStatus("SCHEDULED");
         appointment.setCreatedAt(LocalDateTime.now());
         
-        return appointmentRepository.save(appointment);
+        Appointment saved = appointmentRepository.save(appointment);
+        
+        emailService.sendConfirmationEmail(
+            patient.get().getEmail(), 
+            "Appointment Confirmed", 
+            "Your appointment with Dr. " + doctor.get().getName() + " is confirmed for " + dto.getAppointmentTime()
+        );
+        
+        notificationService.sendNotification("New Appointment from " + patient.get().getName() + " with Dr. " + doctor.get().getName());
+
+        return saved;
+    }
+
+    private boolean isDoctorAvailable(Long doctorId, LocalDateTime time) {
+        // 1. Check Working Hours (09:00 - 17:00)
+        int hour = time.getHour();
+        if (hour < 9 || hour >= 17) {
+            return false;
+        }
+
+        // 2. Check Weekends
+        java.time.DayOfWeek day = time.getDayOfWeek();
+        if (day == java.time.DayOfWeek.SATURDAY || day == java.time.DayOfWeek.SUNDAY) {
+            return false;
+        }
+
+        // 3. Check Overlap using existing repository method
+        // We check if any appointment exists within +/- 15 mins or exact match?
+        // Simple: Exact match for the hour/slot standard
+        // Or check count in range.
+        // Let's assume slots are 1 hour.
+        LocalDateTime start = time;
+        LocalDateTime end = time.plusMinutes(59);
+        
+        // This requires a new repo method or reusing getAppointmentsByDoctorAndDate and filtering
+        // For efficiency, we should have existsByDoctorAndAppointmentTimeBetween...
+        // But reusing getAppointmentsByDoctorAndDate is easier without touching repo interface yet.
+        List<Appointment> existing = appointmentRepository.findByDoctorAndDateRange(doctorId, start, end);
+        // If query finds any "SCHEDULED" or "CONFIRMED" appointment, it's taken.
+        // "CANCELLED" is free.
+        
+        for (Appointment appt : existing) {
+            if (!"CANCELLED".equals(appt.getStatus())) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -123,7 +182,13 @@ public class AppointmentService {
         appointment.setCancellationReason(reason);
         appointment.setUpdatedAt(LocalDateTime.now());
         
-        return appointmentRepository.save(appointment);
+        Appointment saved = appointmentRepository.save(appointment);
+        emailService.sendConfirmationEmail(
+            saved.getPatient().getEmail(),
+            "Appointment Cancelled",
+            "Your appointment has been cancelled. Reason: " + reason
+        );
+        return saved;
     }
 
     /**
@@ -141,14 +206,21 @@ public class AppointmentService {
             throw new IllegalStateException("Cannot reschedule a completed or cancelled appointment");
         }
         
-        // Optimize: Check doctor availability here before rescheduling
-        // boolean isAvailable = checkAvailability(appointment.getDoctor().getId(), newTime);
-        // if (!isAvailable) throw new RuntimeException("Doctor is not available at this time");
+        // Check availability
+        if (!isDoctorAvailable(appointment.getDoctor().getId(), newTime)) {
+            throw new RuntimeException("Doctor is not available at this time (Working hours: Mon-Fri 09:00-17:00) or slot is taken.");
+        }
         
         appointment.setAppointmentTime(newTime);
         appointment.setUpdatedAt(LocalDateTime.now());
         
-        return appointmentRepository.save(appointment);
+        Appointment saved = appointmentRepository.save(appointment);
+        emailService.sendConfirmationEmail(
+            saved.getPatient().getEmail(),
+            "Appointment Rescheduled",
+            "Your appointment has been moved to " + newTime
+        );
+        return saved;
     }
     public List<Appointment> getAllAppointmentsDebug() {
         return appointmentRepository.findAll();

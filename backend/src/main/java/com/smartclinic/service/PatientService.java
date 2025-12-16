@@ -81,4 +81,19 @@ public class PatientService {
     public List<Patient> getAllPatients() {
         return patientRepository.findAll();
     }
+
+    public Patient updatePatient(Long id, Patient patientDetails) {
+        Patient patient = patientRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Patient not found with id: " + id));
+
+        if (patientDetails.getName() != null) patient.setName(patientDetails.getName());
+        if (patientDetails.getPhone() != null) patient.setPhone(patientDetails.getPhone());
+        if (patientDetails.getAddress() != null) patient.setAddress(patientDetails.getAddress());
+        // For password updates, we should probably have a separate flow or check if it's not empty and encode it
+        if (patientDetails.getPassword() != null && !patientDetails.getPassword().isEmpty()) {
+             patient.setPassword(passwordEncoder.encode(patientDetails.getPassword()));
+        }
+
+        return patientRepository.save(patient);
+    }
 }

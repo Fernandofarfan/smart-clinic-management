@@ -115,8 +115,79 @@ const PatientDashboard = () => {
         }
     };
 
+    const [uploadModal, setUploadModal] = useState({ show: false, file: null });
+    const [documents, setDocuments] = useState([]);
+
+    const handleUploadClick = async () => {
+        setUploadModal({ show: true, file: null });
+        // Fetch existing docs
+        try {
+            const res = await api.get(`/documents/patient/${user.id}`);
+            setDocuments(res.data);
+        } catch (e) {
+            console.error("Failed to fetch docs", e);
+        }
+    };
+
+    const handleFileChange = (e) => {
+        setUploadModal({ ...uploadModal, file: e.target.files[0] });
+    };
+
+    const confirmUpload = async () => {
+        if (!uploadModal.file) return;
+        const formData = new FormData();
+        formData.append('file', uploadModal.file);
+        formData.append('patientId', user.id);
+
+        try {
+            setLoading(true);
+            await api.post('/documents/upload', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
+            alert("Document uploaded successfully!");
+            setUploadModal({ show: false, file: null });
+        } catch (e) {
+            console.error(e);
+            alert("Upload failed.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div className="space-y-6">
+            {/* Upload Modal */}
+            {uploadModal.show && (
+                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-center justify-center">
+                    <div className="bg-white p-5 rounded-lg shadow-xl w-96">
+                        <h3 className="text-lg font-bold mb-4">Upload Document</h3>
+                        <div className="mb-4">
+                            <input type="file" onChange={handleFileChange} className="mb-2 w-full" />
+                            <p className="text-xs text-gray-500">Supported formats: PDF, JPG, PNG</p>
+                        </div>
+
+                        <div className="max-h-40 overflow-y-auto mb-4 border-t pt-2">
+                            <h4 className="text-sm font-semibold mb-2">My Documents</h4>
+                            {documents.length === 0 ? <p className="text-xs text-gray-400">No documents yet.</p> : (
+                                <ul className="text-sm space-y-1">
+                                    {documents.map(doc => (
+                                        <li key={doc.id} className="flex justify-between">
+                                            <span className="truncate w-32">{doc.originalName}</span>
+                                            <span className="text-xs text-gray-400">{new Date(doc.uploadedAt).toLocaleDateString()}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
+
+                        <div className="flex justify-end gap-2">
+                            <button onClick={() => setUploadModal({ show: false, file: null })} className="bg-gray-300 px-4 py-2 rounded">Cancel</button>
+                            <button onClick={confirmUpload} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Upload</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {/* Cancel Modal */}
             {cancelModal.show && (
                 <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-center justify-center">
@@ -250,6 +321,29 @@ const PatientDashboard = () => {
                                                 >
                                                     Cancel
                                                 </button>
+                                                {apt.status === 'COMPLETED' && (
+                                                    <button
+                                                        onClick={() => {
+                                                            const token = user.token || localStorage.getItem('token');
+                                                            // We need to fetch with auth header, creating a blob
+                                                            fetch(`${api.defaults.baseURL}/appointments/${apt.id}/pdf`, {
+                                                                headers: { 'Authorization': `Bearer ${token}` }
+                                                            })
+                                                                .then(res => res.blob())
+                                                                .then(blob => {
+                                                                    const url = window.URL.createObjectURL(blob);
+                                                                    const a = document.createElement('a');
+                                                                    a.href = url;
+                                                                    a.download = `appointment_${apt.id}.pdf`;
+                                                                    a.click();
+                                                                })
+                                                                .catch(e => alert("Error downloading PDF"));
+                                                        }}
+                                                        className="text-green-600 hover:text-green-900 ml-4"
+                                                    >
+                                                        ⬇ PDF
+                                                    </button>
+                                                )}
                                             </td>
                                         </tr>
                                     ))
@@ -269,11 +363,47 @@ const PatientDashboard = () => {
                         >
                             Book New Appointment
                         </button>
-                        <button className="w-full bg-white border border-gray-300 rounded-md py-2 px-4 flex items-center justify-center text-sm font-medium text-gray-700 hover:bg-gray-50">
+                        <button
+                            onClick={handleUploadClick}
+                            className="w-full bg-white border border-gray-300 rounded-md py-2 px-4 flex items-center justify-center text-sm font-medium text-gray-700 hover:bg-gray-50"
+                        >
                             Upload Document
                         </button>
-                        <button className="w-full bg-white border border-gray-300 rounded-md py-2 px-4 flex items-center justify-center text-sm font-medium text-gray-700 hover:bg-gray-50">
+                        <button
+                            onClick={() => {
+                                const history = appointments.filter(a => new Date(a.appointmentTime) < new Date());
+                                if (history.length === 0) alert("No past appointment history found.");
+                                else {
+                                    setAppointments(history);
+                                    alert(`Showing ${history.length} past appointments.`);
+                                }
+                            }}
+                            className="w-full bg-white border border-gray-300 rounded-md py-2 px-4 flex items-center justify-center text-sm font-medium text-gray-700 hover:bg-gray-50"
+                        >
                             View History
+                        </button>
+                        <button
+                            onClick={async () => {
+                                setLoading(true); // Show loading
+                                try {
+                                    const apptResponse = await api.get(`/appointments/patient/${user.id}`);
+                                    setAppointments(apptResponse.data);
+                                    alert("Showing all appointments.");
+                                } catch (error) {
+                                    console.error("Failed to fetch all appointments", error);
+                                } finally {
+                                    setLoading(false);
+                                }
+                            }}
+                            className="w-full bg-white border border-gray-300 rounded-md py-2 px-4 flex items-center justify-center text-sm font-medium text-gray-700 hover:bg-gray-50 mt-2"
+                        >
+                            View All Appointments
+                        </button>
+                        <button
+                            onClick={() => navigate('/profile')}
+                            className="w-full bg-white border border-gray-300 rounded-md py-2 px-4 flex items-center justify-center text-sm font-medium text-gray-700 hover:bg-gray-50 mt-2"
+                        >
+                            My Profile / Settings
                         </button>
                     </div>
                 </div>
