@@ -47,4 +47,30 @@ public class EmailService {
             System.err.println("Failed to send email: " + e.getMessage());
         }
     }
+
+    @Async
+    public void sendConfirmationEmail(String toEmail, String subject, String content) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            
+            helper.setFrom(fromEmail);
+            helper.setTo(toEmail);
+            helper.setSubject(subject);
+            
+            String htmlContent = String.format(
+                "<h1>%s</h1>" +
+                "<p>%s</p>" +
+                "<br/>" +
+                "<p>Smart Clinic Team</p>",
+                subject, content
+            );
+            
+            helper.setText(htmlContent, true);
+            mailSender.send(message);
+            
+        } catch (MessagingException e) {
+            System.err.println("Failed to send email: " + e.getMessage());
+        }
+    }
 }
