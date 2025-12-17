@@ -48,7 +48,7 @@ smart-clinic-management/
 │   │   ├── dto/               # Objetos de Transferencia de Datos
 │   │   └── exception/         # Manejo Global de Excepciones
 │   └── src/main/resources/    # Configuraciones, Migraciones SQL
-├── frontend/                   # Portal Web Moderno (Migrando a React)
+├── frontend-react/             # Portal Web Moderno (React + Vite)
 ├── database/                   # Scripts de Base de Datos
 │   ├── schema.sql             # Esquema Base
 │   └── migration_v2.sql       # Migraciones Empresariales V2
@@ -57,36 +57,58 @@ smart-clinic-management/
 
 ## 📋 Prerrequisitos
 
-- Java 17 LTS
-- Maven 3.9+
-- MySQL 8.0+
-- Redis (Opcional, para caché)
-- Servidor SMTP (Opcional, para correos - por defecto usa Mailtrap)
+- Docker y Docker Compose (Recomendado)
+- Java 17 LTS (Para desarrollo local)
+- Node.js 18+ (Para desarrollo frontend)
 
 ## 🛠 Configuración e Instalación
 
-### 1. Configuración de Base de Datos
+### Opción 1: Despliegue Rápido con Docker (Recomendado)
+
+1.  **Clonar el repositorio**
+    ```bash
+    git clone https://github.com/tu-usuario/smart-clinic-management.git
+    cd smart-clinic-management
+    ```
+
+2.  **Iniciar los servicios**
+    ```bash
+    docker-compose up --build
+    ```
+
+3.  **Acceder a la aplicación**
+    - Frontend: http://localhost
+    - Backend API: http://localhost:8082
+    - Documentación API: http://localhost:8082/swagger-ui.html
+
+### Opción 2: Desarrollo Local Manual
+
+#### 1. Configuración de Base de Datos
 ```bash
-# Crear base de datos y aplicar migraciones
+# Asegúrate de tener MySQL 8.0 corriendo
 mysql -u root -p < database/schema.sql
-mysql -u root -p < database/migration_v2.sql
 ```
 
-### 2. Configuración del Backend
-Edita `backend/src/main/resources/application.properties` para que coincida con tu entorno:
+#### 2. Configuración del Backend
+Edita `backend/src/main/resources/application.properties` o establece variables de entorno:
 ```properties
-spring.datasource.password=tu_contraseña
-jwt.secret=tu_clave_secreta_segura
-spring.mail.username=tu_usuario_correo
+export DB_PASSWORD=tu_contraseña
+export JWT_SECRET=tu_clave_secreta_segura
 ```
 
-### 3. Construir y Ejecutar
+#### 3. Construir y Ejecutar Backend
 ```bash
 cd backend
 mvn clean install
 mvn spring-boot:run
 ```
-Accede a la Documentación de la API en: http://localhost:8080/swagger-ui.html
+
+#### 4. Ejecutar Frontend
+```bash
+cd frontend-react
+npm install
+npm run dev
+```
 
 ## 🔌 Endpoints de API (V2)
 

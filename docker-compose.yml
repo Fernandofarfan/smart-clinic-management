@@ -1,12 +1,26 @@
 version: '3.8'
 
 services:
+  # API Gateway (Nginx)
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - smart-clinic-network
+
+  # Backend Service
   backend:
     build: 
       context: ./backend
       dockerfile: Dockerfile
     ports:
-      - "8082:8080"
+      - "8082:8080" # Direct access for debugging
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/smart_clinic_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
       - SPRING_DATASOURCE_USERNAME=root
@@ -15,6 +29,7 @@ services:
       - SPRING_DATA_REDIS_HOST=redis
       - SPRING_DATA_REDIS_PORT=6379
       - JWT_SECRET=${JWT_SECRET:-SmartClinicSecretKeyForJWTTokenGenerationAndValidation2024}
+      - MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE=health,info,prometheus
     volumes:
       - ./uploads:/app/uploads
     depends_on:
@@ -25,19 +40,21 @@ services:
     networks:
       - smart-clinic-network
 
+  # Frontend Service
   frontend:
     build: 
       context: ./frontend-react
       dockerfile: Dockerfile
       args:
-        - VITE_API_URL=http://localhost:8082/api
+        - VITE_API_URL=/api # Use relative path to go through Nginx
     ports:
-      - "3001:80"
+      - "3001:80" # Direct access for debugging
     depends_on:
       - backend
     networks:
       - smart-clinic-network
 
+  # Database
   db:
     image: mysql:8.0
     ports:
@@ -56,12 +73,35 @@ services:
     networks:
       - smart-clinic-network
 
+  # Redis Cache
   redis:
     image: redis:alpine
     ports:
       - "6379:6379"
     volumes:
       - redis_data:/data
+    networks:
+      - smart-clinic-network
+
+  # Monitoring: Prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - smart-clinic-network
+
+  # Monitoring: Grafana
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - prometheus
     networks:
       - smart-clinic-network
 

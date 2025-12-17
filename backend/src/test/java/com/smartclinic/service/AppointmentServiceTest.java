@@ -32,7 +32,7 @@ class AppointmentServiceTest {
     private PatientRepository patientRepository;
 
     @Mock
-    private MockEmailService emailService;
+    private EmailService emailService;
 
     @Mock
     private NotificationService notificationService;
