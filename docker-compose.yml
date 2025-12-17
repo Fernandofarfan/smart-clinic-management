@@ -142,12 +142,44 @@ services:
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_PORT=5672
     depends_on:
-      rabbitmq:
-        condition: service_started
+      - rabbitmq
+      - prometheus
     networks:
       - smart-clinic-network
+
+  # ELK Stack: Elasticsearch
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.10
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - smart-clinic-network
+
+  # ELK Stack: Logstash
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.17.10
+    volumes:
+      - ./logstash/pipeline:/usr/share/logstash/pipeline
+    ports:
+      - "5000:5000"
+      - "9600:9600"
     depends_on:
-      - prometheus
+      - elasticsearch
+    networks:
+      - smart-clinic-network
+
+  # ELK Stack: Kibana
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.17.10
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
     networks:
       - smart-clinic-network
 
@@ -155,6 +187,7 @@ volumes:
   db_data:
   redis_data:
   uploads:
+  elasticsearch_data:
 
 networks:
   smart-clinic-network:

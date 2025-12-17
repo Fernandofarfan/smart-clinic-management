@@ -34,8 +34,13 @@ Una solución de gestión clínica full-stack de grado de producción construida
 - **Testing E2E**: Pruebas de extremo a extremo automatizadas con Cypress.
 - **Arquitectura Orientada a Eventos**: RabbitMQ para procesamiento asíncrono de correos y notificaciones.
 - **Microservicio de IA**: Servicio Python/FastAPI para análisis inteligente de síntomas.
-- **Observabilidad Distribuida**: Trazabilidad completa con Zipkin y métricas con Prometheus/Grafana.
+- **Observabilidad Completa**: 
+    - **Zipkin**: Trazabilidad distribuida.
+    - **ELK Stack**: Logging centralizado (Elasticsearch, Logstash, Kibana).
+    - **Prometheus/Grafana**: Métricas en tiempo real.
+- **Resiliencia**: Circuit Breakers y Retries con Resilience4j para tolerancia a fallos.
 - **Infraestructura como Código (IaC)**: Scripts de Terraform para aprovisionamiento automático en AWS (EKS, RDS, VPC).
+- **Despliegue Kubernetes**: Helm Charts listos para producción.
 - **PWA (Progressive Web App)**: Soporte offline e instalable en dispositivos móviles.
 - **Infraestructura Cloud-Native**: Manifiestos de Kubernetes y Docker Registry Workflow.
 - **Documentación de API**: Documentación Swagger/OpenAPI 3.0 totalmente interactiva.

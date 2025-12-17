@@ -1,0 +1,23 @@
+backend:
+  replicaCount: 2
+  image:
+    repository: smart-clinic/backend
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 8080
+
+frontend:
+  replicaCount: 2
+  image:
+    repository: smart-clinic/frontend
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: LoadBalancer
+    port: 80
+
+database:
+  host: db
+  password: secret_password
