@@ -5,6 +5,7 @@ import com.smartclinic.entity.Doctor;
 import com.smartclinic.mapper.DoctorMapper;
 import com.smartclinic.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -111,12 +112,14 @@ public class DoctorService {
         return response;
     }
 
+    @Cacheable(value = "doctors", key = "'all'")
     public List<DoctorDTO> getAllDoctors() {
         return doctorRepository.findByIsActiveTrue().stream()
                 .map(doctorMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
+    @Cacheable(value = "doctorsBySpecialty", key = "#specialty")
     public List<DoctorDTO> getDoctorsBySpecialty(String specialty) {
         return doctorRepository.findActiveBySpecialty(specialty).stream()
                 .map(doctorMapper::toDTO)
@@ -129,6 +132,7 @@ public class DoctorService {
                 .collect(Collectors.toList());
     }
 
+    @CacheEvict(value = {"doctors", "doctorsBySpecialty", "doctorAvailability"}, allEntries = true)
     public DoctorDTO saveDoctor(Doctor doctor) {
         return doctorMapper.toDTO(doctorRepository.save(doctor));
     }

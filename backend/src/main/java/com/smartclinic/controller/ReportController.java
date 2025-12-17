@@ -1,9 +1,14 @@
 package com.smartclinic.controller;
 
+import com.smartclinic.entity.Appointment;
 import com.smartclinic.service.AnalyticsService;
+import com.smartclinic.service.AppointmentService;
+import com.smartclinic.service.PdfService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +26,12 @@ public class ReportController {
     
     @Autowired
     private AnalyticsService analyticsService;
+
+    @Autowired
+    private PdfService pdfService;
+
+    @Autowired
+    private AppointmentService appointmentService;
     
     @GetMapping("/admin/dashboard")
     @Operation(summary = "Get admin dashboard statistics")
@@ -41,5 +52,22 @@ public class ReportController {
     // @PreAuthorize("hasAnyRole('ADMIN', 'PATIENT')")
     public ResponseEntity<Map<String, Object>> getPatientHealthStats(@PathVariable Long patientId) {
         return ResponseEntity.ok(analyticsService.getPatientHealthStats(patientId));
+    }
+
+    @Operation(summary = "Download Appointment PDF", description = "Generates a PDF summary for a specific appointment")
+    @GetMapping("/appointments/{id}/pdf")
+    public ResponseEntity<byte[]> downloadAppointmentPdf(@PathVariable Long id) {
+        Appointment appointment = appointmentService.getAppointmentById(id)
+                .orElseThrow(() -> new RuntimeException("Appointment not found"));
+
+        byte[] pdfBytes = pdfService.generateAppointmentSummary(appointment);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("attachment", "appointment_" + id + ".pdf");
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(pdfBytes);
     }
 }

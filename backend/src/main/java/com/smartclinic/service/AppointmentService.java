@@ -7,7 +7,7 @@ import com.smartclinic.entity.Patient;
 import com.smartclinic.repository.AppointmentRepository;
 import com.smartclinic.repository.DoctorRepository;
 import com.smartclinic.repository.PatientRepository;
-import com.smartclinic.service.MockEmailService;
+import com.smartclinic.service.EmailService;
 import com.smartclinic.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +34,7 @@ public class AppointmentService {
     private PatientRepository patientRepository;
 
     @Autowired
-    private MockEmailService emailService;
+    private EmailService emailService;
 
     @Autowired
     private NotificationService notificationService;
@@ -70,13 +70,20 @@ public class AppointmentService {
         
         Appointment saved = appointmentRepository.save(appointment);
         
-        emailService.sendConfirmationEmail(
+        emailService.sendAppointmentConfirmation(
             patient.get().getEmail(), 
-            "Appointment Confirmed", 
-            "Your appointment with Dr. " + doctor.get().getName() + " is confirmed for " + dto.getAppointmentTime()
+            patient.get().getName(),
+            doctor.get().getName(),
+            dto.getAppointmentTime().toString()
         );
         
-        notificationService.sendNotification("New Appointment from " + patient.get().getName() + " with Dr. " + doctor.get().getName());
+        notificationService.createNotification(
+            "DOCTOR", 
+            doctor.get().getId(), 
+            "New Appointment", 
+            "New appointment with " + patient.get().getName(), 
+            "APPOINTMENT"
+        );
 
         return saved;
     }
