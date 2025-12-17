@@ -43,11 +43,6 @@ public class SecurityConfig {
                         .requestMatchers("/api/*/login", "/api/*/register").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/actuator/health", "/actuator/info").permitAll()
-                        
-                        // DEBUG & ANALYTICS (Temporary Allow for Testing)
-                        .requestMatchers("/api/analytics/**").permitAll()
-                        .requestMatchers("/api/appointments/debug/all").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/appointments/**").permitAll()
 
                         // Admin endpoints
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
