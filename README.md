@@ -30,6 +30,7 @@ Una solución de gestión clínica full-stack de grado de producción construida
 - **Panel de Análisis**: Estado financiero, métricas de rendimiento y estadísticas de citas.
 
 ### 🛠 Excelencia Técnica
+- **CI/CD Pipeline**: Flujos de trabajo de GitHub Actions para pruebas automáticas, linting y escaneo de seguridad (CodeQL).
 - **PWA (Progressive Web App)**: Soporte offline e instalable en dispositivos móviles.
 - **Infraestructura Cloud-Native**: Manifiestos de Kubernetes y Docker Registry Workflow.
 - **Documentación de API**: Documentación Swagger/OpenAPI 3.0 totalmente interactiva.
