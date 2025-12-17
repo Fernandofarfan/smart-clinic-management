@@ -49,12 +49,29 @@ public class EmailService {
     }
 
     @Async
+    public void sendSimpleMessage(String to, String subject, String text) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            
+            helper.setFrom(fromEmail != null ? fromEmail : "noreply@smartclinic.com");
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(text, false);
+            
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            System.err.println("Failed to send email: " + e.getMessage());
+        }
+    }
+
+    @Async
     public void sendConfirmationEmail(String toEmail, String subject, String content) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
             
-            helper.setFrom(fromEmail);
+            helper.setFrom(fromEmail != null ? fromEmail : "noreply@smartclinic.com");
             helper.setTo(toEmail);
             helper.setSubject(subject);
             
