@@ -12,12 +12,14 @@ Una solución de gestión clínica full-stack de grado de producción construida
 ### 🔐 Seguridad Avanzada
 - **Control de Acceso Basado en Roles (RBAC)**: Permisos granulares para roles de Administrador, Doctor y Paciente.
 - **Autenticación JWT**: Autenticación segura y sin estado basada en tokens con filtros personalizados.
+- **Rate Limiting**: Protección contra ataques DDoS y abuso de API utilizando Bucket4j.
 - **Registro de Auditoría**: Seguimiento exhaustivo de todas las acciones críticas del sistema (listo para cumplimiento HIPAA).
 - **Manejo Seguro de Contraseñas**: Encriptación BCrypt para todas las credenciales.
 
 ### 🏥 Operaciones Clínicas
 - **Portal del Doctor**: Panel de control, Gestión de Citas, Redactor de Recetas con generación de PDF.
 - **Portal del Paciente**: Reserva en línea, Historial Médico, Historial de Recetas, Carga de Documentos.
+- **Recordatorios Automáticos**: Sistema de envío de correos electrónicos programados para citas próximas.
 - **Registros Médicos**: Almacenamiento digital de diagnósticos, planes de tratamiento y archivos adjuntos.
 - **Seguimiento de Alergias y Condiciones**: Información vital de salud del paciente de un vistazo.
 
@@ -28,6 +30,8 @@ Una solución de gestión clínica full-stack de grado de producción construida
 - **Panel de Análisis**: Estado financiero, métricas de rendimiento y estadísticas de citas.
 
 ### 🛠 Excelencia Técnica
+- **PWA (Progressive Web App)**: Soporte offline e instalable en dispositivos móviles.
+- **Infraestructura Cloud-Native**: Manifiestos de Kubernetes y Docker Registry Workflow.
 - **Documentación de API**: Documentación Swagger/OpenAPI 3.0 totalmente interactiva.
 - **Monitoreo**: Métricas de Prometheus y comprobaciones de salud de Actuator.
 - **Rendimiento**: Caché de Redis para endpoints de alta carga.
