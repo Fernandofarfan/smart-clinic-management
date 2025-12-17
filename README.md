@@ -31,6 +31,11 @@ Una solución de gestión clínica full-stack de grado de producción construida
 
 ### 🛠 Excelencia Técnica
 - **CI/CD Pipeline**: Flujos de trabajo de GitHub Actions para pruebas automáticas, linting y escaneo de seguridad (CodeQL).
+- **Testing E2E**: Pruebas de extremo a extremo automatizadas con Cypress.
+- **Arquitectura Orientada a Eventos**: RabbitMQ para procesamiento asíncrono de correos y notificaciones.
+- **Microservicio de IA**: Servicio Python/FastAPI para análisis inteligente de síntomas.
+- **Observabilidad Distribuida**: Trazabilidad completa con Zipkin y métricas con Prometheus/Grafana.
+- **Infraestructura como Código (IaC)**: Scripts de Terraform para aprovisionamiento automático en AWS (EKS, RDS, VPC).
 - **PWA (Progressive Web App)**: Soporte offline e instalable en dispositivos móviles.
 - **Infraestructura Cloud-Native**: Manifiestos de Kubernetes y Docker Registry Workflow.
 - **Documentación de API**: Documentación Swagger/OpenAPI 3.0 totalmente interactiva.
@@ -54,6 +59,8 @@ smart-clinic-management/
 │   │   └── exception/         # Manejo Global de Excepciones
 │   └── src/main/resources/    # Configuraciones, Migraciones SQL
 ├── frontend-react/             # Portal Web Moderno (React + Vite)
+├── ai-service/                 # Microservicio de IA (Python/FastAPI)
+├── terraform/                  # Infraestructura como Código (AWS)
 ├── database/                   # Scripts de Base de Datos
 │   ├── schema.sql             # Esquema Base
 │   └── migration_v2.sql       # Migraciones Empresariales V2
@@ -113,6 +120,12 @@ mvn spring-boot:run
 cd frontend-react
 npm install
 npm run dev
+```
+
+#### 5. Ejecutar Pruebas E2E (Cypress)
+```bash
+cd frontend-react
+npm run cypress:open
 ```
 
 ## 🔌 Endpoints de API (V2)

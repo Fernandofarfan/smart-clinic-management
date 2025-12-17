@@ -28,6 +28,10 @@ services:
       - APP_FILE_STORAGE_DIR=/app/uploads
       - SPRING_DATA_REDIS_HOST=redis
       - SPRING_DATA_REDIS_PORT=6379
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=guest
+      - SPRING_RABBITMQ_PASSWORD=guest
       - JWT_SECRET=${JWT_SECRET:-change_this_secret_key_for_production_security}
       - MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE=health,info,prometheus
     volumes:
@@ -36,6 +40,8 @@ services:
       db:
         condition: service_healthy
       redis:
+        condition: service_started
+      rabbitmq:
         condition: service_started
     networks:
       - smart-clinic-network
@@ -83,6 +89,18 @@ services:
     networks:
       - smart-clinic-network
 
+  # Message Broker: RabbitMQ
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    networks:
+      - smart-clinic-network
+
   # Monitoring: Prometheus
   prometheus:
     image: prom/prometheus:latest
@@ -100,6 +118,34 @@ services:
       - "3000:3000"
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - prometheus
+    networks:
+      - smart-clinic-network
+
+  # Distributed Tracing: Zipkin
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - smart-clinic-network
+
+  # AI Microservice (Python/FastAPI)
+  ai-service:
+    build:
+      context: ./ai-service
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+    depends_on:
+      rabbitmq:
+        condition: service_started
+    networks:
+      - smart-clinic-network
     depends_on:
       - prometheus
     networks:

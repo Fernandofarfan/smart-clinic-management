@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: smart-clinic-backend
+  labels:
+    app: smart-clinic-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: smart-clinic-backend
+  template:
+    metadata:
+      labels:
+        app: smart-clinic-backend
+    spec:
+      containers:
+      - name: backend
+        image: smart-clinic-backend:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SPRING_DATASOURCE_URL
+          value: "jdbc:mysql://mysql-service:3306/smart_clinic_db?createDatabaseIfNotExist=true"
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-secrets
+              key: password
+        - name: SPRING_DATA_REDIS_HOST
+          value: "redis-service"
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+spec:
+  selector:
+    app: smart-clinic-backend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP
