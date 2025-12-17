@@ -28,6 +28,7 @@
     "sockjs-client": "^1.6.1",
     "sonner": "^2.0.7",
     "stompjs": "^2.3.3",
+    "vite-plugin-pwa": "^1.2.0",
     "zod": "^4.2.1"
   },
   "devDependencies": {
@@ -35,25 +36,23 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.1",
     "@testing-library/user-event": "^14.6.1",
-    "@types/react": "^19.2.5",
-    "@types/react-dom": "^19.2.3",
+    "@types/node": "^22.13.1",
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
     "@vitejs/plugin-react": "^5.1.1",
     "autoprefixer": "^10.4.23",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "husky": "^9.0.11",
     "jsdom": "^27.3.0",
+    "lint-staged": "^15.2.2",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17",
-    "vite": "^7.2.4",
-    "vitest": "^4.0.16",
     "typescript": "~5.7.2",
-    "@types/react": "^19.0.8",
-    "@types/react-dom": "^19.0.3",
-    "@types/node": "^22.13.1",
-    "husky": "^9.0.11",
-    "lint-staged": "^15.2.2"
+    "vite": "^7.2.4",
+    "vitest": "^4.0.16"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
