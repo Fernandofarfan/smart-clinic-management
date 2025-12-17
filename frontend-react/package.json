@@ -51,6 +51,14 @@
     "typescript": "~5.7.2",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
-    "@types/node": "^22.13.1"
+    "@types/node": "^22.13.1",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   }
 }
