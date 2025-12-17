@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * TokenService - Deliverable Q9 (5 points)
+ * TokenService
  * Service for JWT token generation and validation
  */
 @Service
@@ -27,7 +27,6 @@ public class TokenService {
 
     /**
      * Generate JWT token using user email
-     * Satisfies Q9 requirement for generateToken method (3 points)
      * 
      * @param email User's email address
      * @return JWT token string
@@ -62,7 +61,6 @@ public class TokenService {
 
     /**
      * Get signing key from configured secret
-     * Satisfies Q9 requirement for getSigningKey method (2 points)
      * 
      * @return SecretKey for JWT signing
      */

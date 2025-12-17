@@ -16,7 +16,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * DoctorService - Deliverable Q10 (5 points)
+ * DoctorService
  * Service for doctor-related business logic
  */
 @Service
@@ -36,7 +36,6 @@ public class DoctorService {
 
     /**
      * Get available times for a doctor on a specific date
-     * Satisfies Q10 requirement for getAvailableTimes method (3 points)
      * 
      * @param doctorId Doctor's ID
      * @param date Date to check availability
@@ -69,7 +68,6 @@ public class DoctorService {
 
     /**
      * Validate doctor login credentials
-     * Satisfies Q10 requirement for validateLogin method (2 points)
      * 
      * @param email Doctor's email
      * @param password Doctor's password

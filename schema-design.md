@@ -1,7 +1,5 @@
 # Smart Clinic Management System - Database Schema Design
 
-**Deliverable Q2 (5 points)**
-
 ## Overview
 This document describes the MySQL database design for the Smart Clinic Management System, including table structures, relationships, and stored procedures.
 

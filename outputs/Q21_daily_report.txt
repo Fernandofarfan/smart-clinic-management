@@ -1,2 +1,0 @@
-doctor_id	doctor_name	specialty	total_appointments	scheduled_count	completed_count	cancelled_count	report_date
-1	Dr. John Smith	Cardiology	2	2	0	0	2025-12-01

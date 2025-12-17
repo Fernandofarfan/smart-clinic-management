@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * AppointmentService - Deliverable Q6 (6 points)
+ * AppointmentService
  * Service for appointment-related business logic
  */
 @Service
@@ -41,7 +41,6 @@ public class AppointmentService {
 
     /**
      * Book a new appointment
-     * Satisfies Q6 requirement for bookAppointment method that saves appointment (3 points)
      * 
      * @param dto Appointment data transfer object
      * @return Saved appointment entity
@@ -126,7 +125,6 @@ public class AppointmentService {
 
     /**
      * Get appointments for a doctor on a specific date
-     * Satisfies Q6 requirement for method to retrieve appointments by doctor and date (3 points)
      * 
      * @param doctorId Doctor's ID
      * @param date Date to retrieve appointments for

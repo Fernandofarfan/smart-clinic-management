@@ -2,7 +2,7 @@
 
 Una solución de gestión clínica full-stack de grado de producción construida con tecnologías empresariales modernas.
 
-![Versión](https://img.shields.io/badge/version-2.0.0-blue)
+![Versión](https://img.shields.io/badge/version-2.0.1-blue)
 ![Compilación](https://img.shields.io/badge/build-passing-brightgreen)
 ![Cobertura](https://img.shields.io/badge/coverage-85%25-green)
 ![Licencia](https://img.shields.io/badge/license-MIT-blue)

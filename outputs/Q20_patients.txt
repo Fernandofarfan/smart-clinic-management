@@ -1,6 +1,0 @@
-id	name	email	password	phone	date_of_birth	address	gender	blood_group	is_active
-1	Alice Brown	alice.brown@email.com	patient123	+1-555-1001	1990-05-15	123 Main St, New York, NY	Female	A+	1
-2	Bob Martinez	bob.martinez@email.com	patient123	+1-555-1002	1985-08-22	456 Oak Ave, Los Angeles, CA	Male	O+	1
-3	Carol White	carol.white@email.com	patient123	+1-555-1003	1992-03-10	789 Pine Rd, Chicago, IL	Female	B+	1
-4	David Lee	david.lee@email.com	patient123	+1-555-1004	1988-11-30	321 Elm St, Houston, TX	Male	AB+	1
-5	Emma Taylor	emma.taylor@email.com	patient123	+1-555-1005	1995-07-18	654 Maple Dr, Phoenix, AZ	Female	A-	1

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 /**
- * Appointment Entity - Deliverable Q4 (6 points)
+ * Appointment Entity
  * JPA entity representing an appointment in the Smart Clinic Management System
  */
 @Entity
@@ -26,7 +26,6 @@ public class Appointment extends BaseEntity {
 
     /**
      * Many-to-One relationship with Doctor
-     * Satisfies Q4 requirement for @ManyToOne relationship with Doctor
      */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "doctor_id", nullable = false)
@@ -35,7 +34,6 @@ public class Appointment extends BaseEntity {
 
     /**
      * Many-to-One relationship with Patient
-     * Satisfies Q4 requirement for @ManyToOne relationship with Patient
      */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "patient_id", nullable = false)
@@ -44,7 +42,6 @@ public class Appointment extends BaseEntity {
 
     /**
      * Appointment time field of type LocalDateTime
-     * Satisfies Q4 requirement for appointmentTime field with validation
      */
     @NotNull(message = "Appointment time is required")
     @Column(name = "appointment_time", nullable = false)

@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * DoctorController - Deliverable Q5 (6 points)
+ * DoctorController
  * REST controller for doctor-related endpoints
  */
 @RestController
@@ -43,7 +43,6 @@ public class DoctorController {
 
     /**
      * Get doctor availability endpoint
-     * Satisfies Q5 requirement for GET endpoint with dynamic parameters and token validation (6 points)
      * 
      * @param id Doctor ID (path variable)
      * @param date Date to check availability (query parameter)

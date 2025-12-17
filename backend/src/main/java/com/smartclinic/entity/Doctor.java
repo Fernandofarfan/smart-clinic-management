@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Doctor Entity - Deliverable Q3 (8 points)
+ * Doctor Entity
  * JPA entity representing a doctor in the Smart Clinic Management System
  */
 @Entity

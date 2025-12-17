@@ -1,8 +1,8 @@
 -- SQL Test Queries for Smart Clinic Management System
--- These queries will generate the outputs required for submission
+-- These queries are used to verify system functionality
 
 -- ============================================
--- Q19: SHOW TABLES (3 points)
+-- SHOW TABLES
 -- ============================================
 USE smart_clinic_db;
 SHOW TABLES;
@@ -11,14 +11,14 @@ SHOW TABLES;
 -- admins, appointments, doctors, patients, prescriptions
 
 -- ============================================
--- Q20: SELECT 5 Patient Records (3 points)
+-- SELECT 5 Patient Records
 -- ============================================
 SELECT * FROM patients LIMIT 5;
 
 -- Expected output: 5 patient records with all fields
 
 -- ============================================
--- Q21: GetDailyAppointmentReportByDoctor (3 points)
+-- GetDailyAppointmentReportByDoctor
 -- ============================================
 -- Call stored procedure for a specific doctor and date
 CALL GetDailyAppointmentReportByDoctor(1, '2025-12-01');
@@ -26,7 +26,7 @@ CALL GetDailyAppointmentReportByDoctor(1, '2025-12-01');
 -- Expected output: Daily appointment statistics for Doctor ID 1 on Dec 1, 2025
 
 -- ============================================
--- Q22: GetDoctorWithMostPatientsByMonth (3 points)
+-- GetDoctorWithMostPatientsByMonth
 -- ============================================
 -- Call stored procedure for November 2025
 CALL GetDoctorWithMostPatientsByMonth(2025, 11);
@@ -34,7 +34,7 @@ CALL GetDoctorWithMostPatientsByMonth(2025, 11);
 -- Expected output: Doctor with most unique patients in November 2025
 
 -- ============================================
--- Q23: GetDoctorWithMostPatientsByYear (3 points)
+-- GetDoctorWithMostPatientsByYear
 -- ============================================
 -- Call stored procedure for year 2025
 CALL GetDoctorWithMostPatientsByYear(2025);

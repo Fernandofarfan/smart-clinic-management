@@ -1,2 +1,0 @@
-doctor_id	doctor_name	specialty	unique_patients	total_appointments	year
-1	Dr. John Smith	Cardiology	3	3	2025

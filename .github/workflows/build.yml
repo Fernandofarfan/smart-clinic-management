@@ -1,5 +1,4 @@
 # GitHub Actions Workflow for Smart Clinic Management System
-# Deliverable Q12 (5 points)
 
 name: Java CI with Maven
 
